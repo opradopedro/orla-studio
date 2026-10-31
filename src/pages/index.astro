@@ -1,0 +1,559 @@
+---
+import Base from '../layouts/Base.astro';
+import Conversa, { type Mensagem } from '../components/Conversa.astro';
+import Onda from '../components/Onda.astro';
+import IconeWhatsApp from '../components/IconeWhatsApp.astro';
+import { linkWhatsApp } from '../config';
+
+const conversa: Mensagem[] = [
+  { de: 'cliente', hora: '23:12', texto: 'Boa noite! Vocês têm horário pra limpeza essa semana?' },
+  {
+    de: 'empresa',
+    hora: '23:12',
+    texto: 'Boa noite! Tenho estes horários livres para limpeza:',
+    opcoes: ['Quarta, 9h', 'Quinta, 14h30', 'Sexta, 10h'],
+  },
+  { de: 'cliente', hora: '23:13', texto: 'Quinta, 14h30', escolhida: 'Quinta, 14h30' },
+  {
+    de: 'empresa',
+    hora: '23:13',
+    texto: 'Pronto, está marcado: limpeza na quinta às 14h30. Dois dias antes eu te mando um lembrete pra confirmar.',
+  },
+  {
+    de: 'empresa',
+    hora: '23:13',
+    texto: 'Aqui está o endereço. Até quinta!',
+    local: { titulo: 'Como chegar', endereco: 'Av. da Orla, 100, Praia Grande' },
+  },
+];
+
+const servicos = [
+  {
+    nome: 'Secretária IA',
+    texto:
+      'O paciente que mandou mensagem às 23h já sai com horário marcado. Dois dias antes, recebe um lembrete com botão para confirmar ou remarcar.',
+    href: '/secretaria-ia',
+    link: 'Como a Secretária IA funciona',
+  },
+  {
+    nome: 'Reativação de clientes',
+    texto:
+      'Quem não volta desde o ano passado recebe uma mensagem educada e marca o retorno ali mesmo. Sem gastar com anúncio: a gente trabalha a lista que você já tem.',
+    href: '/reativacao-de-clientes',
+    link: 'Como funciona a reativação',
+  },
+  {
+    nome: 'Sites e sistemas',
+    texto:
+      'O estoque sai do caderno, o preço para de ser no chute e o seu site aparece quando alguém procura pelo seu serviço na cidade.',
+    href: '/sites-e-sistemas',
+    link: 'Ver sites e sistemas',
+  },
+];
+
+const passos = [
+  {
+    nome: 'Conversa',
+    texto:
+      'Você conta como funcionam hoje a sua agenda e o seu atendimento. Pode ser no seu espaço, se você estiver na Baixada, ou por vídeo.',
+  },
+  {
+    nome: 'Protótipo',
+    texto:
+      'Você testa uma versão funcionando no seu próprio celular, já com as informações do seu negócio, e pede os ajustes.',
+  },
+  {
+    nome: 'Implantação',
+    texto:
+      'A gente liga tudo na sua agenda e no WhatsApp oficial e mostra para a sua equipe como acompanhar as conversas.',
+  },
+  {
+    nome: 'Acompanhamento mensal',
+    texto: 'Todo mês a gente lê as conversas, ajusta as respostas e te conta o que mudou.',
+  },
+];
+---
+
+<Base
+  titulo="Orla Studio | Secretária IA para WhatsApp em Praia Grande"
+  descricao="Estúdio de tecnologia em Praia Grande (SP). A Secretária IA atende o WhatsApp da sua clínica 24 horas, marca na agenda e confirma o paciente. Também fazemos reativação de clientes, sites e sistemas."
+>
+  <!-- Hero -->
+  <section class="hero" aria-labelledby="hero-titulo">
+    <div class="conteiner hero__grade">
+      <div class="hero__texto">
+        <p class="rotulo">Praia Grande, SP</p>
+        <h1 id="hero-titulo">Tecnologia que trabalha enquanto você atende.</h1>
+        <p class="apoio">
+          A Secretária IA responde o WhatsApp da sua clínica na hora, marca direto na agenda e confirma o
+          paciente antes da consulta. Você cuida de quem está na sua frente.
+        </p>
+        <div class="hero__botoes">
+          <a class="botao" href="/secretaria-ia">Conhecer a Secretária IA</a>
+          <a class="botao botao--contorno" href={linkWhatsApp()} target="_blank" rel="noopener">
+            <IconeWhatsApp />
+            Falar no WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <Conversa
+        class="hero__conversa"
+        contato="Sua clínica"
+        mensagens={conversa}
+        legenda="Exemplo de conversa com a Secretária IA"
+      />
+    </div>
+    <div class="hero__horizonte" aria-hidden="true"></div>
+    <Onda tipo="linhas" class="hero__ondas" />
+  </section>
+
+  <!-- Serviços -->
+  <section class="secao servicos" aria-labelledby="servicos-titulo">
+    <div class="conteiner">
+      <div class="servicos__cabeca">
+        <h2 id="servicos-titulo">Onde a gente pode ajudar</h2>
+        <p class="apoio">
+          Começamos pelo que mais pesa no dia a dia de uma clínica: o WhatsApp que não para de tocar.
+        </p>
+      </div>
+
+      <ul class="servicos__lista">
+        {
+          servicos.map((servico, indice) => (
+            <li class:list={['servico', { 'servico--principal': indice === 0 }]} data-revelar>
+              <h3 class="servico__nome">{servico.nome}</h3>
+              <p class="servico__texto">{servico.texto}</p>
+              <a class="link servico__link" href={servico.href}>
+                {servico.link}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Como trabalhamos -->
+  <section class="secao processo" aria-labelledby="processo-titulo">
+    <div class="conteiner">
+      <div class="processo__cabeca">
+        <h2 id="processo-titulo">Como a gente trabalha</h2>
+        <p class="apoio">Do primeiro papo ao acompanhamento, você fala sempre com as mesmas duas pessoas.</p>
+      </div>
+
+      <ol class="processo__passos" data-revelar>
+        {
+          passos.map((passo, indice) => (
+            <li class="passo" style={`--ordem: ${indice}`}>
+              <span class="passo__numero" aria-hidden="true">
+                {indice + 1}
+              </span>
+              <h3 class="passo__nome">{passo.nome}</h3>
+              <p>{passo.texto}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- Quem somos -->
+  <Onda cor="var(--nevoa)" />
+  <section class="secao claro quem" aria-labelledby="quem-titulo">
+    <div class="conteiner quem__grade">
+      <h2 id="quem-titulo">Quem atende você é quem constrói.</h2>
+      <div class="quem__texto">
+        <!-- TODO: se quiserem, colocar aqui uma foto real do casal (sem foto de banco de imagens). -->
+        <p class="apoio">
+          A Orla é um casal de Praia Grande. Ele cuida da parte técnica e constrói cada sistema. Ela cuida do
+          atendimento e acompanha você de perto depois que tudo está no ar.
+        </p>
+        <p>
+          Você não fala com central nem com um vendedor que some depois do contrato. Fala direto com quem fez,
+          pelo mesmo WhatsApp de sempre.
+        </p>
+        <a class="link" href="/sobre">Conhecer a Orla</a>
+      </div>
+    </div>
+  </section>
+  <Onda cor="var(--nevoa)" invertida />
+
+  <!-- Chamada final -->
+  <section class="secao chamada" aria-labelledby="chamada-titulo">
+    <div class="conteiner chamada__conteudo">
+      <img
+        class="chamada__emblema"
+        src="/marca/emblema-branco-240.webp"
+        alt=""
+        width="230"
+        height="240"
+        loading="lazy"
+        decoding="async"
+      />
+      <p class="rotulo">Vamos conversar</p>
+      <h2 id="chamada-titulo">Sua próxima ideia começa aqui.</h2>
+      <p class="apoio">Manda uma mensagem contando o que você precisa. Quem responde é a gente mesmo.</p>
+      <a
+        class="botao"
+        href={linkWhatsApp('Oi! Vim pelo site da Orla e queria contar o que eu preciso.')}
+        target="_blank"
+        rel="noopener"
+      >
+        <IconeWhatsApp />
+        Conte pra gente o que você precisa
+      </a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* Hero: o texto fica acima da linha do horizonte e o celular se apoia nela. */
+  .hero {
+    --altura-ondas: clamp(4.5rem, 3rem + 5vw, 7.5rem);
+    position: relative;
+    padding-top: clamp(3rem, 2rem + 5vw, 6.5rem);
+    padding-bottom: var(--altura-ondas);
+    overflow: hidden;
+  }
+
+  .hero__grade {
+    position: relative;
+    display: grid;
+    gap: 3.5rem;
+    align-items: end;
+  }
+
+  .hero__texto {
+    align-self: center;
+    padding-bottom: 2rem;
+  }
+
+  .hero__texto .rotulo {
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 {
+    max-width: 11.5em;
+  }
+
+  .hero .apoio {
+    margin-top: 1.75rem;
+  }
+
+  .hero__botoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2.5rem;
+  }
+
+  .hero__grade > :global(.hero__conversa) {
+    justify-self: center;
+    position: relative;
+    z-index: 1;
+    margin-bottom: -1px;
+  }
+
+  .hero__horizonte {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: var(--altura-ondas);
+    height: 1px;
+    background: rgba(185, 204, 224, 0.35);
+  }
+
+  .hero :global(.hero__ondas) {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: var(--altura-ondas);
+  }
+
+  /* No hero, a legenda do celular fica abaixo da linha, junto das ondas */
+  .hero :global(.conversa__legenda) {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    margin-top: 0.85rem;
+  }
+
+  @media (max-width: 47.99rem) {
+    .hero__botoes .botao {
+      flex: 1 1 100%;
+    }
+  }
+
+  @media (min-width: 60rem) {
+    .hero__grade {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      gap: 4rem;
+    }
+
+    .hero__grade::before {
+      content: '';
+      position: absolute;
+      top: -10rem;
+      bottom: 0;
+      left: calc(58.33% + 1rem);
+      width: 1px;
+      background: var(--linha);
+    }
+
+    .hero__grade > :global(.hero__conversa) {
+      justify-self: end;
+    }
+  }
+
+  /* Serviços: linhas largas separadas por fios, não cards. */
+  .servicos__cabeca,
+  .processo__cabeca {
+    display: grid;
+    gap: 1.25rem;
+    margin-bottom: clamp(3rem, 2rem + 3vw, 4.5rem);
+  }
+
+  .servicos__lista {
+    list-style: none;
+    padding: 0;
+    border-bottom: 1px solid var(--linha);
+  }
+
+  .servico {
+    display: grid;
+    gap: 1rem;
+    padding-block: clamp(2rem, 1.5rem + 2vw, 3rem);
+    border-top: 1px solid var(--linha);
+  }
+
+  .servico__nome {
+    font-size: var(--t-h3);
+  }
+
+  .servico--principal .servico__nome {
+    font-size: clamp(1.75rem, 1.3rem + 2vw, 2.5rem);
+  }
+
+  .servico__texto {
+    color: var(--azul-claro);
+    max-width: 36em;
+  }
+
+  .servico__link {
+    justify-self: start;
+    font-size: var(--t-pequeno);
+  }
+
+  @media (min-width: 60rem) {
+    .servicos__cabeca,
+    .processo__cabeca {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      align-items: end;
+      gap: 4rem;
+    }
+
+    .servico {
+      grid-template-columns: minmax(0, 4fr) minmax(0, 5fr) minmax(0, 3fr);
+      align-items: baseline;
+      gap: 3rem;
+    }
+
+    .servico__link {
+      justify-self: end;
+      text-align: right;
+    }
+  }
+
+  /* Como trabalhamos: os passos ficam pendurados numa linha, como o horizonte. */
+  .processo {
+    padding-top: 0;
+  }
+
+  .processo__passos {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 2.5rem;
+    position: relative;
+  }
+
+  .passo {
+    position: relative;
+    padding-left: 4rem;
+  }
+
+  .passo::before {
+    content: '';
+    position: absolute;
+    left: 1.25rem;
+    top: 0.3rem;
+    bottom: -2.5rem;
+    width: 1px;
+    background: var(--linha);
+  }
+
+  .passo:last-child::before {
+    display: none;
+  }
+
+  .passo__numero {
+    position: absolute;
+    left: 0;
+    top: -0.3rem;
+    width: 2.5rem;
+    text-align: center;
+    background: var(--marinho);
+    font-size: 2.25rem;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--azul-claro);
+  }
+
+  .passo__nome {
+    font-size: 1.25rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .passo p {
+    color: var(--azul-claro);
+    font-size: var(--t-pequeno);
+    max-width: 30em;
+  }
+
+  @media (min-width: 60rem) {
+    .processo__passos {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 2.5rem;
+      padding-top: 5.5rem;
+    }
+
+    .processo__passos::before {
+      content: '';
+      position: absolute;
+      top: 3.5rem;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: rgba(185, 204, 224, 0.35);
+      transform-origin: left;
+    }
+
+    .passo {
+      padding-left: 0;
+    }
+
+    .passo::before {
+      left: 0;
+      top: -2rem;
+      bottom: auto;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--azul-claro);
+      display: block;
+    }
+
+    .passo:last-child::before {
+      display: block;
+    }
+
+    .passo__numero {
+      top: -5.5rem;
+      width: auto;
+      text-align: left;
+      background: none;
+      font-size: 3rem;
+    }
+  }
+
+  /* Entrada da linha do processo: a linha se desenha e os passos aparecem em sequência. */
+  @media (prefers-reduced-motion: no-preference) and (min-width: 60rem) {
+    :global(.js) .processo__passos[data-revelar] {
+      opacity: 1;
+      transform: none;
+    }
+
+    :global(.js) .processo__passos[data-revelar]::before {
+      transform: scaleX(0);
+      transition: transform 1.4s cubic-bezier(0.3, 0.6, 0.2, 1);
+    }
+
+    :global(.js) .processo__passos[data-revelar] .passo {
+      opacity: 0;
+      transform: translateY(10px);
+      transition:
+        opacity 0.7s ease calc(0.3s + var(--ordem) * 0.25s),
+        transform 0.7s ease calc(0.3s + var(--ordem) * 0.25s);
+    }
+
+    :global(.js) .processo__passos.visivel::before {
+      transform: scaleX(1);
+    }
+
+    :global(.js) .processo__passos.visivel .passo {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* Quem somos: a seção clara no meio do marinho. */
+  .quem__grade {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .quem h2 {
+    max-width: 12em;
+  }
+
+  .quem__texto {
+    display: grid;
+    gap: 1.25rem;
+    justify-items: start;
+    max-width: 34em;
+  }
+
+  @media (min-width: 60rem) {
+    .quem__grade {
+      grid-template-columns: minmax(0, 6fr) minmax(0, 6fr);
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .quem__texto {
+      padding-top: 0.75rem;
+      padding-left: 3rem;
+      border-left: 1px solid var(--linha-clara);
+    }
+  }
+
+  /* Chamada final, centralizada como na apresentação da marca. */
+  .chamada__conteudo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .chamada__emblema {
+    width: 4.5rem;
+    height: auto;
+    margin-bottom: 2.5rem;
+  }
+
+  .chamada h2 {
+    margin-top: 1.25rem;
+    max-width: 14em;
+  }
+
+  .chamada .apoio {
+    margin-top: 1.25rem;
+  }
+
+  .chamada .botao {
+    margin-top: 2.5rem;
+  }
+</style>
