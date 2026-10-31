@@ -1,5 +1,6 @@
 ---
 // Emblema original (public/marca) + nome escrito em Montserrat, como na apresentação da marca.
+import { caminho } from '../config';
 interface Props {
   tamanho?: 'menu' | 'grande';
 }
@@ -9,7 +10,7 @@ const { tamanho = 'menu' } = Astro.props;
 <span class:list={['marca', `marca--${tamanho}`]}>
   <img
     class="marca__emblema"
-    src={tamanho === 'grande' ? '/marca/emblema-branco-240.webp' : '/marca/emblema-branco-96.webp'}
+    src={caminho(tamanho === 'grande' ? '/marca/emblema-branco-240.webp' : '/marca/emblema-branco-96.webp')}
     alt=""
     width="92"
     height="96"

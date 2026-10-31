@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import Conversa, { type Mensagem } from '../components/Conversa.astro';
 import Onda from '../components/Onda.astro';
 import IconeWhatsApp from '../components/IconeWhatsApp.astro';
-import { linkWhatsApp } from '../config';
+import { caminho, linkWhatsApp } from '../config';
 
 const conversa: Mensagem[] = [
   { de: 'cliente', hora: '23:12', texto: 'Boa noite! Vocês têm horário pra limpeza essa semana?' },
@@ -89,7 +89,7 @@ const passos = [
           paciente antes da consulta. Você cuida de quem está na sua frente.
         </p>
         <div class="hero__botoes">
-          <a class="botao" href="/secretaria-ia">Conhecer a Secretária IA</a>
+          <a class="botao" href={caminho('/secretaria-ia')}>Conhecer a Secretária IA</a>
           <a class="botao botao--contorno" href={linkWhatsApp()} target="_blank" rel="noopener">
             <IconeWhatsApp />
             Falar no WhatsApp
@@ -124,7 +124,7 @@ const passos = [
             <li class:list={['servico', { 'servico--principal': indice === 0 }]} data-revelar>
               <h3 class="servico__nome">{servico.nome}</h3>
               <p class="servico__texto">{servico.texto}</p>
-              <a class="link servico__link" href={servico.href}>
+              <a class="link servico__link" href={caminho(servico.href)}>
                 {servico.link}
               </a>
             </li>
@@ -173,7 +173,7 @@ const passos = [
           Você não fala com central nem com um vendedor que some depois do contrato. Fala direto com quem fez,
           pelo mesmo WhatsApp de sempre.
         </p>
-        <a class="link" href="/sobre">Conhecer a Orla</a>
+        <a class="link" href={caminho('/sobre')}>Conhecer a Orla</a>
       </div>
     </div>
   </section>
@@ -184,7 +184,7 @@ const passos = [
     <div class="conteiner chamada__conteudo">
       <img
         class="chamada__emblema"
-        src="/marca/emblema-branco-240.webp"
+        src={caminho('/marca/emblema-branco-240.webp')}
         alt=""
         width="230"
         height="240"

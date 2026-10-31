@@ -2,7 +2,9 @@
 import '../styles/global.css';
 import Cabecalho from '../components/Cabecalho.astro';
 import Rodape from '../components/Rodape.astro';
-import { contato, site } from '../config';
+import { caminho, contato, site } from '../config';
+import fonte400 from '../fonts/montserrat-latin-400-normal.woff2?url';
+import fonte700 from '../fonts/montserrat-latin-700-normal.woff2?url';
 
 interface Props {
   titulo: string;
@@ -12,9 +14,10 @@ interface Props {
 
 const { titulo, descricao, imagem = '/og.png' } = Astro.props;
 const base = Astro.site ?? new URL(site.dominio.toLowerCase());
+const inicio = caminho('/');
 const canonico = new URL(Astro.url.pathname, base).href;
-const imagemAbsoluta = new URL(imagem, base).href;
-const tituloCompleto = Astro.url.pathname === '/' ? titulo : `${titulo} | ${site.nome}`;
+const imagemAbsoluta = new URL(caminho(imagem), base).href;
+const tituloCompleto = Astro.url.pathname === inicio || Astro.url.pathname === site.base ? titulo : `${titulo} | ${site.nome}`;
 
 const dadosEstruturados = {
   '@context': 'https://schema.org',
@@ -22,8 +25,8 @@ const dadosEstruturados = {
   name: site.nome,
   description:
     'Estúdio de tecnologia em Praia Grande (SP). Secretária IA para WhatsApp, reativação de clientes, sites e sistemas para pequenos negócios e clínicas.',
-  url: base.href,
-  logo: new URL('/marca/icone-512.png', base).href,
+  url: new URL(inicio, base).href,
+  logo: new URL(caminho('/marca/icone-512.png'), base).href,
   image: imagemAbsoluta,
   telephone: `+${contato.whatsapp}`,
   email: contato.email,
@@ -52,12 +55,12 @@ const dadosEstruturados = {
     <link rel="canonical" href={canonico} />
     <meta name="theme-color" content="#072447" />
 
-    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="icon" type="image/png" sizes="48x48" href={caminho('/favicon-48.png')} />
+    <link rel="apple-touch-icon" href={caminho('/apple-touch-icon.png')} />
+    <link rel="sitemap" href={caminho('/sitemap-index.xml')} />
 
-    <link rel="preload" href="/fonts/montserrat-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/montserrat-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={fonte700} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={fonte400} as="font" type="font/woff2" crossorigin />
 
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="pt_BR" />

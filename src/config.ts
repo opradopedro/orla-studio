@@ -13,14 +13,23 @@ export const contato = {
 
 export const site = {
   nome: 'Orla Studio',
-  // Endereço final do site, sem barra no fim. Usado no sitemap e nos links de compartilhamento.
-  dominio: 'https://www.SEU-DOMINIO.com.br',
+  // Endereço do site, sem barra no fim. Usado no sitemap e nos links de compartilhamento.
+  // Enquanto o site estiver no GitHub Pages, fica assim. Com domínio próprio, troque por
+  // 'https://www.seudominio.com.br' e deixe base: ''.
+  dominio: 'https://opradopedro.github.io',
+  base: '/orla-studio',
   cidade: 'Praia Grande',
   estado: 'SP',
 };
 
 // Mensagem que já vem escrita quando a pessoa abre o WhatsApp pelo site.
 export const mensagemPadrao = 'Oi! Vim pelo site da Orla e queria conversar.';
+
+// Monta um endereço interno do site respeitando a pasta do GitHub Pages.
+// Exemplo: caminho('/sobre') vira '/orla-studio/sobre'.
+export function caminho(endereco: string): string {
+  return `${site.base}${endereco}`;
+}
 
 export function linkWhatsApp(mensagem: string = mensagemPadrao): string {
   return `https://wa.me/${contato.whatsapp}?text=${encodeURIComponent(mensagem)}`;

@@ -1,7 +1,7 @@
 ---
 import Marca from './Marca.astro';
 import IconeWhatsApp from './IconeWhatsApp.astro';
-import { linkWhatsApp } from '../config';
+import { caminho, linkWhatsApp, site } from '../config';
 
 const paginas = [
   { href: '/secretaria-ia', nome: 'Secretária IA' },
@@ -11,12 +11,12 @@ const paginas = [
   { href: '/contato', nome: 'Contato' },
 ];
 
-const atual = Astro.url.pathname.replace(/\/$/, '') || '/';
+const atual = Astro.url.pathname.slice(site.base.length).replace(/\/$/, '') || '/';
 ---
 
 <header class="cabecalho">
   <div class="conteiner cabecalho__barra">
-    <a href="/" class="cabecalho__marca" aria-label="Orla Studio, página inicial">
+    <a href={caminho('/')} class="cabecalho__marca" aria-label="Orla Studio, página inicial">
       <Marca />
     </a>
 
@@ -25,7 +25,7 @@ const atual = Astro.url.pathname.replace(/\/$/, '') || '/';
         {
           paginas.map((pagina) => (
             <li>
-              <a href={pagina.href} aria-current={atual === pagina.href ? 'page' : undefined}>
+              <a href={caminho(pagina.href)} aria-current={atual === pagina.href ? 'page' : undefined}>
                 {pagina.nome}
               </a>
             </li>
