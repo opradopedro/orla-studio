@@ -1,0 +1,301 @@
+/* Fontes: Montserrat servida pelo próprio site (public/fonts), licença OFL. */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/montserrat-latin-400-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/montserrat-latin-500-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/montserrat-latin-700-normal.woff2') format('woff2');
+}
+
+:root {
+  /* Cores da marca */
+  --marinho: #072447;
+  --marinho-fundo: #041a35;
+  --branco: #ffffff;
+  --azul-claro: #b9cce0;
+  /* Tons derivados */
+  --nevoa: #eef3f8;
+  --azul-tinta: #2e4a6b;
+  --linha: rgba(185, 204, 224, 0.2);
+  --linha-clara: rgba(7, 36, 71, 0.14);
+
+  --fonte: 'Montserrat', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Escala tipográfica */
+  --t-rotulo: 0.75rem;
+  --t-pequeno: 0.9375rem;
+  --t-corpo: 1.0625rem;
+  --t-destaque: clamp(1.125rem, 1rem + 0.5vw, 1.3125rem);
+  --t-h3: clamp(1.375rem, 1.15rem + 1vw, 1.75rem);
+  --t-h2: clamp(2rem, 1.4rem + 2.6vw, 3.25rem);
+  --t-h1: clamp(2.5rem, 1.5rem + 4.4vw, 4.75rem);
+
+  /* Espaços */
+  --margem: clamp(1.25rem, 0.6rem + 3vw, 2.5rem);
+  --largura: 76rem;
+  --secao: clamp(5rem, 3.5rem + 7vw, 9rem);
+  --raio: 8px;
+  --altura-menu: 4.5rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--altura-menu) + 1rem);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--marinho);
+  color: var(--branco);
+  font-family: var(--fonte);
+  font-size: var(--t-corpo);
+  font-weight: 400;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+p,
+ul,
+ol,
+figure {
+  margin: 0;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: var(--t-h1);
+  line-height: 1.04;
+}
+
+h2 {
+  font-size: var(--t-h2);
+}
+
+h3 {
+  font-size: var(--t-h3);
+  line-height: 1.2;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--azul-claro);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.claro :focus-visible {
+  outline-color: var(--marinho);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.pular {
+  position: absolute;
+  left: var(--margem);
+  top: -4rem;
+  z-index: 100;
+  padding: 0.75rem 1rem;
+  background: var(--branco);
+  color: var(--marinho);
+  font-weight: 700;
+  border-radius: var(--raio);
+}
+
+.pular:focus {
+  top: 1rem;
+}
+
+/* Estrutura */
+.conteiner {
+  width: 100%;
+  max-width: calc(var(--largura) + 2 * var(--margem));
+  margin-inline: auto;
+  padding-inline: var(--margem);
+}
+
+.secao {
+  padding-block: var(--secao);
+}
+
+.claro {
+  background: var(--nevoa);
+  color: var(--marinho);
+}
+
+/* Texto */
+.rotulo {
+  display: inline-block;
+  font-size: var(--t-rotulo);
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--azul-claro);
+}
+
+.claro .rotulo {
+  color: var(--azul-tinta);
+}
+
+.apoio {
+  color: var(--azul-claro);
+  font-size: var(--t-destaque);
+  line-height: 1.55;
+  max-width: 34em;
+}
+
+.claro .apoio {
+  color: var(--azul-tinta);
+}
+
+/* Botões */
+.botao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-height: 3.25rem;
+  padding: 0.85rem 1.5rem;
+  border: 1px solid var(--branco);
+  border-radius: var(--raio);
+  background: var(--branco);
+  color: var(--marinho);
+  font-family: inherit;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.botao:hover {
+  background: var(--azul-claro);
+  border-color: var(--azul-claro);
+}
+
+.botao--contorno {
+  background: transparent;
+  color: var(--branco);
+  border-color: rgba(185, 204, 224, 0.55);
+}
+
+.botao--contorno:hover {
+  background: rgba(185, 204, 224, 0.12);
+  border-color: var(--azul-claro);
+}
+
+.claro .botao,
+.botao--marinho {
+  background: var(--marinho);
+  border-color: var(--marinho);
+  color: var(--branco);
+}
+
+.claro .botao:hover,
+.botao--marinho:hover {
+  background: var(--azul-tinta);
+  border-color: var(--azul-tinta);
+}
+
+.botao svg {
+  width: 1.15em;
+  height: 1.15em;
+  flex: none;
+}
+
+/* Link de texto com sublinhado fino */
+.link {
+  display: inline-block;
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: rgba(185, 204, 224, 0.5);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.35em;
+  transition: text-decoration-color 0.2s ease;
+}
+
+.link:hover {
+  text-decoration-color: currentColor;
+}
+
+.claro .link {
+  text-decoration-color: rgba(7, 36, 71, 0.35);
+}
+
+/* Entrada suave ao rolar: só com JavaScript ativo e sem preferência por menos movimento */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-revelar] {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+
+  .js [data-revelar].visivel {
+    opacity: 1;
+    transform: none;
+  }
+}

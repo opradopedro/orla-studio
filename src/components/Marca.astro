@@ -1,0 +1,71 @@
+---
+// Emblema original (public/marca) + nome escrito em Montserrat, como na apresentação da marca.
+interface Props {
+  tamanho?: 'menu' | 'grande';
+}
+const { tamanho = 'menu' } = Astro.props;
+---
+
+<span class:list={['marca', `marca--${tamanho}`]}>
+  <img
+    class="marca__emblema"
+    src={tamanho === 'grande' ? '/marca/emblema-branco-240.webp' : '/marca/emblema-branco-96.webp'}
+    alt=""
+    width="92"
+    height="96"
+    decoding="async"
+  />
+  <span class="marca__nome">
+    <span class="marca__orla">Orla</span>
+    <span class="marca__studio">Studio</span>
+  </span>
+</span>
+
+<style>
+  .marca {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--branco);
+    text-transform: uppercase;
+    line-height: 1;
+  }
+
+  .marca__emblema {
+    width: auto;
+    height: 2.25rem;
+  }
+
+  .marca__nome {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .marca__orla {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    margin-right: -0.22em;
+  }
+
+  .marca__studio {
+    font-size: 0.5rem;
+    font-weight: 500;
+    letter-spacing: 0.5em;
+    margin-right: -0.5em;
+  }
+
+  .marca--grande .marca__emblema {
+    height: 3.5rem;
+  }
+
+  .marca--grande .marca__orla {
+    font-size: 1.75rem;
+  }
+
+  .marca--grande .marca__studio {
+    font-size: 0.625rem;
+  }
+</style>

@@ -1,0 +1,28 @@
+# dependências
+node_modules/
+
+# build do Astro
+dist/
+.astro/
+
+# Vercel
+.vercel/
+.output/
+
+# variáveis de ambiente
+.env
+.env.*
+!.env.example
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# sistema
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.idea/

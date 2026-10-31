@@ -1,0 +1,104 @@
+---
+// Curva das ondas do emblema, usada como motivo gráfico.
+// "linhas": duas ondas finas que andam devagar (hero).
+// "divisor": faixa preenchida para a passagem entre seções.
+interface Props {
+  tipo?: 'linhas' | 'divisor';
+  cor?: string;
+  invertida?: boolean;
+  class?: string;
+}
+
+const { tipo = 'divisor', cor = 'var(--nevoa)', invertida = false, class: classe } = Astro.props;
+
+// Um período da onda tem 1440 de largura e termina com a mesma inclinação com que começa,
+// então dá para repetir sem emenda.
+const periodo = 'M0 64 C200 24 500 10 760 58 S1240 104 1440 64';
+const doisPeriodos = `${periodo} S1940 10 2200 58 S2680 104 2880 64`;
+---
+
+{
+  tipo === 'linhas' ? (
+    <div class:list={['onda-linhas', classe]} aria-hidden="true">
+      <svg class="onda-linhas__a" viewBox="0 0 2880 120" preserveAspectRatio="none">
+        <path d={doisPeriodos} />
+      </svg>
+      <svg class="onda-linhas__b" viewBox="0 0 2880 120" preserveAspectRatio="none">
+        <path d={doisPeriodos} />
+      </svg>
+    </div>
+  ) : (
+    <svg
+      class:list={['onda-divisor', { 'onda-divisor--invertida': invertida }, classe]}
+      viewBox="0 0 1440 120"
+      preserveAspectRatio="none"
+      aria-hidden="true"
+      style={`--cor-onda: ${cor}`}
+    >
+      <path d={`${periodo} V120 H0 Z`} />
+    </svg>
+  )
+}
+
+<style>
+  .onda-linhas {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .onda-linhas svg {
+    position: absolute;
+    left: 0;
+    width: 200%;
+    max-width: none;
+    height: 70%;
+    fill: none;
+    stroke: var(--azul-claro);
+  }
+
+  .onda-linhas path {
+    vector-effect: non-scaling-stroke;
+    stroke-width: 1.25;
+  }
+
+  .onda-linhas__a {
+    top: 0;
+    opacity: 0.5;
+  }
+
+  .onda-linhas__b {
+    top: 22%;
+    opacity: 0.25;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .onda-linhas__a {
+      animation: mar 48s linear infinite;
+    }
+
+    .onda-linhas__b {
+      animation: mar 64s linear infinite reverse;
+    }
+  }
+
+  @keyframes mar {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  .onda-divisor {
+    display: block;
+    width: 100%;
+    height: clamp(2.5rem, 1.5rem + 4vw, 5.5rem);
+    fill: var(--cor-onda);
+    margin-bottom: -1px;
+  }
+
+  .onda-divisor--invertida {
+    transform: scale(-1, -1);
+    margin-bottom: 0;
+    margin-top: -1px;
+  }
+</style>
