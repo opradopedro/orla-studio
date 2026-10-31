@@ -731,6 +731,10 @@ const passos = [
     display: none;
   }
 
+  .processo__janela {
+    padding-inline: var(--margem);
+  }
+
   @media (min-width: 60rem) {
     .processo__janela {
       padding-inline: max(var(--margem), calc((100vw - var(--largura)) / 2));
@@ -796,6 +800,7 @@ const passos = [
   }
 
   .quem > :global(.quem__aneis) {
+    display: none;
     position: absolute;
     right: -12rem;
     top: 50%;
@@ -838,6 +843,10 @@ const passos = [
       grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
       gap: 5rem;
       align-items: center;
+    }
+
+    .quem > :global(.quem__aneis) {
+      display: block;
     }
 
     .quem__lista {
