@@ -1,0 +1,434 @@
+---
+// Celular com uma conversa de WhatsApp feita em HTML e CSS.
+// As mensagens aparecem uma a uma quando o celular entra na tela.
+// Leitores de tela recebem a conversa inteira em texto.
+
+export interface Mensagem {
+  de: 'cliente' | 'empresa';
+  texto: string;
+  hora: string;
+  opcoes?: string[];
+  escolhida?: string;
+  local?: { titulo: string; endereco: string };
+}
+
+interface Props {
+  contato: string;
+  mensagens: Mensagem[];
+  legenda: string;
+  class?: string;
+}
+
+const { contato, mensagens, legenda, class: classe } = Astro.props;
+const iniciais = contato
+  .split(' ')
+  .map((parte) => parte[0])
+  .join('')
+  .slice(0, 2)
+  .toUpperCase();
+---
+
+<figure class:list={['conversa', classe]} data-conversa>
+  <div class="celular" aria-hidden="true">
+    <div class="celular__topo">
+      <span class="celular__avatar">{iniciais}</span>
+      <span class="celular__contato">
+        <strong>{contato}</strong>
+        <span class="celular__status" data-status>online</span>
+      </span>
+    </div>
+
+    <ol class="celular__mensagens">
+      {
+        mensagens.map((mensagem, indice) => (
+          <li
+            class:list={['msg', `msg--${mensagem.de}`]}
+            data-passo={indice}
+            data-de={mensagem.de}
+            data-escolhida={mensagem.escolhida}
+          >
+            <div class="msg__balao">
+              {mensagem.local ? (
+                <span class="msg__local">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
+                    <circle cx="12" cy="10" r="3" />
+                  </svg>
+                  <span>
+                    <strong>{mensagem.local.titulo}</strong>
+                    <span>{mensagem.local.endereco}</span>
+                  </span>
+                </span>
+              ) : null}
+              <p>{mensagem.texto}</p>
+              <span class="msg__hora">
+                {mensagem.hora}
+                {mensagem.de === 'cliente' && (
+                  <svg viewBox="0 0 18 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M1 6.5 4.5 10 11 2" />
+                    <path d="M7 9.5 7.5 10 14 2" />
+                  </svg>
+                )}
+              </span>
+            </div>
+            {mensagem.opcoes && (
+              <div class="msg__opcoes">
+                {mensagem.opcoes.map((opcao) => (
+                  <span class="msg__opcao" data-opcao={opcao}>
+                    {opcao}
+                  </span>
+                ))}
+              </div>
+            )}
+          </li>
+        ))
+      }
+      <li class="msg msg--empresa msg--digitando" data-digitando hidden>
+        <div class="msg__balao"><span></span><span></span><span></span></div>
+      </li>
+    </ol>
+  </div>
+
+  <ol class="sr-only">
+    {
+      mensagens.map((mensagem) => (
+        <li>
+          {mensagem.de === 'cliente' ? 'Cliente' : contato}, {mensagem.hora}: {mensagem.texto}
+          {mensagem.opcoes && ` Opções: ${mensagem.opcoes.join(', ')}.`}
+          {mensagem.local && ` ${mensagem.local.titulo}: ${mensagem.local.endereco}.`}
+        </li>
+      ))
+    }
+  </ol>
+
+  <figcaption class="conversa__legenda">
+    <span>{legenda}</span>
+    <button type="button" class="conversa__repetir" data-repetir hidden>Ver a conversa de novo</button>
+  </figcaption>
+</figure>
+
+<style>
+  .conversa {
+    width: min(100%, 22rem);
+  }
+
+  .celular {
+    display: flex;
+    flex-direction: column;
+    height: 36rem;
+    border: 1px solid rgba(185, 204, 224, 0.4);
+    border-radius: 2.5rem;
+    padding: 0.6rem;
+    background: var(--marinho-fundo);
+  }
+
+  .celular__topo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.1rem 1rem 0.9rem;
+    border-bottom: 1px solid var(--linha);
+    font-size: 0.875rem;
+    line-height: 1.3;
+  }
+
+  .celular__avatar {
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    background: var(--azul-claro);
+    color: var(--marinho);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+
+  .celular__contato {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .celular__status {
+    font-size: 0.75rem;
+    color: var(--azul-claro);
+  }
+
+  .celular__mensagens {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    overflow: hidden;
+    list-style: none;
+    margin: 0;
+    padding: 1rem 0.75rem 1.25rem;
+    border-radius: 0 0 2rem 2rem;
+    background: #0a2a50;
+  }
+
+  .msg {
+    display: flex;
+    flex-direction: column;
+    max-width: 86%;
+    font-size: 0.875rem;
+    line-height: 1.45;
+  }
+
+  .msg[hidden] {
+    display: none;
+  }
+
+  .msg--cliente {
+    align-self: flex-end;
+    align-items: flex-end;
+  }
+
+  .msg__balao {
+    position: relative;
+    padding: 0.55rem 0.75rem 0.4rem;
+    border-radius: 0.9rem;
+  }
+
+  .msg--empresa .msg__balao {
+    background: #143a66;
+    color: var(--branco);
+    border-top-left-radius: 0.25rem;
+  }
+
+  .msg--cliente .msg__balao {
+    background: var(--branco);
+    color: var(--marinho);
+    border-top-right-radius: 0.25rem;
+  }
+
+  .msg__hora {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.25rem;
+    margin-top: 0.15rem;
+    font-size: 0.6875rem;
+    opacity: 0.75;
+  }
+
+  .msg__hora svg {
+    width: 0.9rem;
+    height: 0.6rem;
+  }
+
+  .msg__local {
+    display: flex;
+    gap: 0.6rem;
+    margin: 0.1rem 0 0.5rem;
+    padding: 0.6rem;
+    border-radius: 0.5rem;
+    background: rgba(185, 204, 224, 0.12);
+    font-size: 0.8125rem;
+  }
+
+  .msg__local svg {
+    flex: none;
+    width: 1.1rem;
+    height: 1.1rem;
+    margin-top: 0.1rem;
+    color: var(--azul-claro);
+  }
+
+  .msg__local > span {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .msg__local span span {
+    color: var(--azul-claro);
+  }
+
+  .msg__opcoes {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    margin-top: 0.35rem;
+  }
+
+  .msg__opcao {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid rgba(185, 204, 224, 0.45);
+    border-radius: 0.6rem;
+    color: var(--branco);
+    font-weight: 500;
+    text-align: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .msg__opcao.escolhida {
+    background: var(--azul-claro);
+    border-color: var(--azul-claro);
+    color: var(--marinho);
+  }
+
+  .msg--digitando .msg__balao {
+    display: flex;
+    gap: 0.3rem;
+    padding: 0.8rem 0.9rem;
+  }
+
+  .msg--digitando span {
+    width: 0.4rem;
+    height: 0.4rem;
+    border-radius: 50%;
+    background: var(--azul-claro);
+    animation: digitando 1.2s ease-in-out infinite;
+  }
+
+  .msg--digitando span:nth-child(2) {
+    animation-delay: 0.15s;
+  }
+
+  .msg--digitando span:nth-child(3) {
+    animation-delay: 0.3s;
+  }
+
+  @keyframes digitando {
+    0%,
+    60%,
+    100% {
+      opacity: 0.35;
+      transform: translateY(0);
+    }
+    30% {
+      opacity: 1;
+      transform: translateY(-3px);
+    }
+  }
+
+  /* Antes da animação começar, as mensagens ficam escondidas (só com JavaScript e movimento liberado). */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .msg[data-passo]:not(.mostrada) {
+      display: none;
+    }
+  }
+
+  .msg.entrando {
+    animation: entrar 0.35s ease-out;
+  }
+
+  @keyframes entrar {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+  }
+
+  .conversa__legenda {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.25rem 1rem;
+    margin-top: 1rem;
+    padding-inline: 0.5rem;
+    font-size: 0.8125rem;
+    color: var(--azul-claro);
+  }
+
+  .conversa__repetir {
+    padding: 0.4rem 0;
+    border: 0;
+    background: none;
+    color: var(--branco);
+    font: inherit;
+    font-weight: 500;
+    text-decoration: underline;
+    text-underline-offset: 0.3em;
+    text-decoration-color: rgba(185, 204, 224, 0.6);
+    cursor: pointer;
+  }
+
+  @media (max-width: 30rem) {
+    .celular {
+      height: 32rem;
+    }
+  }
+</style>
+
+<script>
+  const esperar = (ms: number) => new Promise((resolver) => setTimeout(resolver, ms));
+  const semMovimento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function prepararConversa(figura: HTMLElement) {
+    const passos = Array.from(figura.querySelectorAll<HTMLElement>('[data-passo]'));
+    const digitando = figura.querySelector<HTMLElement>('[data-digitando]');
+    const status = figura.querySelector<HTMLElement>('[data-status]');
+    const repetir = figura.querySelector<HTMLButtonElement>('[data-repetir]');
+    let rodando = false;
+
+    const esconderTudo = () => {
+      passos.forEach((passo) => passo.classList.remove('mostrada'));
+      figura.querySelectorAll('.escolhida').forEach((opcao) => opcao.classList.remove('escolhida'));
+    };
+
+    const mostrar = (passo: HTMLElement) => {
+      passo.classList.add('mostrada', 'entrando');
+      passo.addEventListener('animationend', () => passo.classList.remove('entrando'), { once: true });
+    };
+
+    async function tocar() {
+      if (rodando || !digitando) return;
+      rodando = true;
+      if (repetir) repetir.hidden = true;
+      esconderTudo();
+      await esperar(600);
+
+      for (const passo of passos) {
+        if (passo.dataset.de === 'empresa') {
+          digitando.hidden = false;
+          if (status) status.textContent = 'digitando...';
+          await esperar(1500);
+          digitando.hidden = true;
+          if (status) status.textContent = 'online';
+        } else {
+          const escolhida = passo.dataset.escolhida;
+          if (escolhida) {
+            await esperar(1100);
+            figura.querySelector(`[data-opcao="${CSS.escape(escolhida)}"]`)?.classList.add('escolhida');
+            await esperar(500);
+          } else {
+            await esperar(1200);
+          }
+        }
+        mostrar(passo);
+        await esperar(500);
+      }
+
+      rodando = false;
+      if (repetir) repetir.hidden = false;
+    }
+
+    repetir?.addEventListener('click', tocar);
+
+    esconderTudo();
+    const observador = new IntersectionObserver(
+      (entradas) => {
+        if (entradas.some((entrada) => entrada.isIntersecting)) {
+          observador.disconnect();
+          tocar();
+        }
+      },
+      { threshold: 0.4 },
+    );
+    observador.observe(figura);
+  }
+
+  if (!semMovimento) {
+    document.querySelectorAll<HTMLElement>('[data-conversa]').forEach((figura) => {
+      if ('IntersectionObserver' in window) {
+        prepararConversa(figura);
+      } else {
+        figura.querySelectorAll('[data-passo]').forEach((passo) => passo.classList.add('mostrada'));
+      }
+    });
+  }
+</script>
