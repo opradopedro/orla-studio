@@ -2,10 +2,9 @@
 import Base from '../layouts/Base.astro';
 import TopoPagina from '../components/TopoPagina.astro';
 import Icone from '../components/Icone.astro';
-import Aneis from '../components/Aneis.astro';
+import Globo from '../components/Globo.astro';
 import Onda from '../components/Onda.astro';
 import ChamadaFinal from '../components/ChamadaFinal.astro';
-import { caminho } from '../config';
 
 // TODO: colocar nome e foto real de cada um (foto em public/equipe/, sem banco de imagens).
 const pessoas = [
@@ -49,25 +48,16 @@ const principios = [
 
 <Base
   titulo="Sobre a Orla"
-  descricao="A Orla Studio é um estúdio de tecnologia de Praia Grande (SP). Quem entende o seu problema é quem constrói a solução e te atende depois."
+  descricao="Na Orla Studio, de Praia Grande (SP), você fala direto com quem monta o seu sistema. Quem entende o seu problema é quem constrói a solução e te atende depois."
 >
-  <TopoPagina rotulo="Sobre a Orla" titulo="Um estúdio pequeno, de propósito.">
+  <TopoPagina rotulo="Sobre a Orla" titulo="Na Orla, você fala direto com quem monta o seu sistema.">
     <p>
       A Orla nasceu em Praia Grande para fazer tecnologia que funciona no dia a dia de pequenos negócios. Sem central
       de atendimento e sem jargão.
     </p>
-    <div slot="visual" class="local" aria-hidden="true">
-      <Aneis class="local__aneis" />
-      <img
-        class="local__emblema"
-        src={caminho('/marca/emblema-branco-240.webp')}
-        alt=""
-        width="230"
-        height="240"
-        decoding="async"
-      />
-      <span class="local__coordenada local__coordenada--a">24°00′ S</span>
-      <span class="local__coordenada local__coordenada--b">46°24′ O</span>
+    <div slot="visual" class="local">
+      <Globo />
+      <p class="local__legenda"><Icone nome="map-pin" /> Praia Grande, SP. Atendemos todo o Brasil.</p>
     </div>
   </TopoPagina>
 
@@ -95,7 +85,7 @@ const principios = [
     </div>
   </section>
 
-  <Onda cor="var(--nevoa)" />
+  <Onda cor="var(--marca-claro)" />
   <section class="secao claro" aria-labelledby="pensa-titulo">
     <div class="conteiner">
       <div class="cabeca-secao cabeca-secao--lado">
@@ -119,7 +109,7 @@ const principios = [
       </ul>
     </div>
   </section>
-  <Onda cor="var(--nevoa)" invertida />
+  <Onda cor="var(--marca-claro)" invertida />
 
   <!--
     TODO: prova social. Quando houver depoimentos reais (com autorização do cliente),
@@ -131,43 +121,18 @@ const principios = [
 
 <style>
   .local {
-    position: relative;
-    display: grid;
-    place-items: center;
     width: min(100%, 24rem);
-    aspect-ratio: 1;
     margin-inline: auto;
   }
 
-  .local :global(.local__aneis) {
-    position: absolute;
-    inset: 0;
-  }
-
-  .local__emblema {
-    width: 30%;
-    height: auto;
-  }
-
-  .local__coordenada {
-    position: absolute;
-    font-size: var(--t-rotulo);
-    font-weight: 500;
-    letter-spacing: 0.3em;
-    color: var(--azul-claro);
-  }
-
-  .local__coordenada--a {
-    top: 50%;
-    left: 0;
-    translate: -40% -50%;
-    rotate: -90deg;
-  }
-
-  .local__coordenada--b {
-    bottom: -0.5rem;
-    left: 50%;
-    translate: -50% 100%;
+  .local__legenda {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+    font-size: var(--t-pequeno);
+    color: var(--acento);
   }
 
   .pessoas {
@@ -188,8 +153,8 @@ const principios = [
     width: 4.5rem;
     height: 4.5rem;
     border-radius: 50%;
-    background: var(--azul-claro);
-    color: var(--marinho);
+    background: var(--acento);
+    color: var(--papel);
   }
 
   .pessoa__foto :global(.icone) {

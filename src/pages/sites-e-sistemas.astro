@@ -205,9 +205,9 @@ const choco = {
     gap: 0.5rem;
     width: 12.5rem;
     padding: 1rem;
-    background: var(--marinho-painel-2);
+    background: var(--painel-2);
     font-size: 0.8125rem;
-    box-shadow: 0 24px 48px -20px rgba(2, 12, 26, 0.8);
+    box-shadow: 0 24px 48px -20px rgba(7, 36, 71, 0.24);
     transform: translateY(calc((0.5 - var(--p, 0.5)) * 60px));
   }
 
@@ -222,19 +222,19 @@ const choco = {
   .cardapio__topo :global(.icone) {
     width: 1rem;
     height: 1rem;
-    color: var(--azul-claro);
+    color: var(--acento);
   }
 
   .cardapio__item {
     display: flex;
     justify-content: space-between;
     padding-top: 0.5rem;
-    border-top: 1px solid rgba(185, 204, 224, 0.1);
-    color: var(--azul-claro);
+    border-top: 1px solid color-mix(in srgb, var(--acento) 10%, transparent);
+    color: var(--acento);
   }
 
   .cardapio__item span:last-child {
-    color: var(--branco);
+    color: var(--tinta);
     font-weight: 500;
   }
 
@@ -267,7 +267,7 @@ const choco = {
   }
 
   .situacao__antes {
-    color: var(--azul-claro);
+    color: var(--acento);
   }
 
   .situacao__depois {
@@ -277,7 +277,7 @@ const choco = {
 
   .situacao__depois :global(.situacao__seta) {
     margin-top: 0.2rem;
-    color: var(--azul-claro);
+    color: var(--acento);
   }
 
   @media (min-width: 60rem) {
@@ -295,7 +295,7 @@ const choco = {
       font-weight: 500;
       letter-spacing: 0.3em;
       text-transform: uppercase;
-      color: var(--azul-claro);
+      color: var(--acento);
     }
   }
 
@@ -317,7 +317,7 @@ const choco = {
   .projeto__imagem {
     aspect-ratio: 16 / 10;
     border-bottom: 1px solid var(--borda-painel);
-    background: var(--marinho-fundo);
+    background: var(--fundo-2);
   }
 
   .projeto__imagem img {
@@ -332,8 +332,8 @@ const choco = {
     place-items: center;
     height: 100%;
     background-image:
-      linear-gradient(rgba(185, 204, 224, 0.06) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(185, 204, 224, 0.06) 1px, transparent 1px);
+      linear-gradient(color-mix(in srgb, var(--acento) 6%, transparent) 1px, transparent 1px),
+      linear-gradient(90deg, color-mix(in srgb, var(--acento) 6%, transparent) 1px, transparent 1px);
     background-size: 28px 28px;
   }
 
@@ -349,14 +349,14 @@ const choco = {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    border: 1px solid rgba(185, 204, 224, 0.45);
+    border: 1px solid color-mix(in srgb, var(--acento) 45%, transparent);
   }
 
   .projeto__aviso {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    color: var(--azul-claro);
+    color: var(--acento);
     font-size: var(--t-pequeno);
   }
 
@@ -378,21 +378,21 @@ const choco = {
     justify-content: center;
     gap: 1.25rem;
     padding: 1.75rem;
-    border: 1px dashed rgba(185, 204, 224, 0.4);
+    border: 1px dashed color-mix(in srgb, var(--acento) 40%, transparent);
     border-radius: var(--raio-painel);
     text-decoration: none;
     transition: border-color 0.2s ease, background-color 0.2s ease;
   }
 
   .proximo:hover {
-    border-color: var(--azul-claro);
-    background: rgba(185, 204, 224, 0.05);
+    border-color: var(--acento);
+    background: color-mix(in srgb, var(--acento) 5%, transparent);
   }
 
   .proximo__texto {
     display: block;
     margin-top: 0.35rem;
-    color: var(--azul-claro);
+    color: var(--acento);
   }
 
   @media (min-width: 60rem) {
