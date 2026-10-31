@@ -1,6 +1,6 @@
 ---
 import Marca from './Marca.astro';
-import { contato, linkWhatsApp, site } from '../config';
+import { caminho, contato, linkWhatsApp, site } from '../config';
 
 const ano = new Date().getFullYear();
 ---
@@ -8,7 +8,7 @@ const ano = new Date().getFullYear();
 <footer class="rodape">
   <div class="conteiner rodape__grade">
     <div class="rodape__sobre">
-      <a href="/" class="rodape__marca" aria-label="Orla Studio, página inicial">
+      <a href={caminho('/')} class="rodape__marca" aria-label="Orla Studio, página inicial">
         <Marca />
       </a>
       <p>
@@ -20,11 +20,11 @@ const ano = new Date().getFullYear();
     <nav aria-label="Páginas do site">
       <h2 class="rodape__titulo">Páginas</h2>
       <ul>
-        <li><a href="/secretaria-ia">Secretária IA</a></li>
-        <li><a href="/reativacao-de-clientes">Reativação de clientes</a></li>
-        <li><a href="/sites-e-sistemas">Sites e sistemas</a></li>
-        <li><a href="/sobre">Sobre</a></li>
-        <li><a href="/contato">Contato</a></li>
+        <li><a href={caminho('/secretaria-ia')}>Secretária IA</a></li>
+        <li><a href={caminho('/reativacao-de-clientes')}>Reativação de clientes</a></li>
+        <li><a href={caminho('/sites-e-sistemas')}>Sites e sistemas</a></li>
+        <li><a href={caminho('/sobre')}>Sobre</a></li>
+        <li><a href={caminho('/contato')}>Contato</a></li>
       </ul>
     </nav>
 
