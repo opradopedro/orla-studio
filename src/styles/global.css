@@ -28,17 +28,17 @@
   --marca-claro: #e9eef4;
   --marca-branco: #ffffff;
 
-  /* Tema claro (padrão): fundo branco, texto azul escuro, destaques em azul médio.
-     Seções com a classe .escuro trocam esses valores (ver abaixo). */
-  --papel: #ffffff;
-  --tinta: #072447;
-  --acento: #244a6c;
-  --painel: #ffffff;
-  --painel-2: #f4f7fa;
-  --fundo-2: #e9eef4;
-  --linha: rgba(36, 74, 108, 0.16);
-  --borda-painel: rgba(36, 74, 108, 0.14);
-  --sombra: 0 1px 2px rgba(7, 36, 71, 0.04), 0 24px 48px -30px rgba(7, 36, 71, 0.35);
+  /* Tema escuro (padrão): fundo azul escuro, texto branco, apoio em azul claro.
+     Superfícies e destaques usam o azul médio. */
+  --papel: #072447;
+  --tinta: #ffffff;
+  --acento: #e9eef4;
+  --painel: #0e2f55;
+  --painel-2: #163b63;
+  --fundo-2: #051b36;
+  --linha: rgba(233, 238, 244, 0.16);
+  --borda-painel: rgba(233, 238, 244, 0.14);
+  --sombra: 0 24px 48px -28px rgba(0, 0, 0, 0.55);
 
   --fonte: 'Montserrat', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
@@ -60,16 +60,16 @@
   --altura-menu: 4.5rem;
 }
 
-/* Tema escuro, usado só em pontos de destaque */
+/* Destaque em azul médio: cartões e seções que precisam se separar do fundo */
 .escuro {
-  --papel: #072447;
+  --papel: #244a6c;
   --tinta: #ffffff;
-  --acento: #c3d0de;
-  --painel: #0d2e55;
-  --painel-2: #12365f;
-  --fundo-2: #041a35;
-  --linha: rgba(233, 238, 244, 0.16);
-  --borda-painel: rgba(233, 238, 244, 0.14);
+  --acento: #e9eef4;
+  --painel: #1b3f62;
+  --painel-2: #2b5279;
+  --fundo-2: #1b3f62;
+  --linha: rgba(233, 238, 244, 0.2);
+  --borda-painel: rgba(233, 238, 244, 0.18);
   --sombra: none;
   background: var(--papel);
   color: var(--tinta);
@@ -197,8 +197,13 @@ a {
   padding-block: var(--secao);
 }
 
+/* Seção em azul médio no meio do escuro */
 .claro {
-  background: var(--fundo-2);
+  --papel: #244a6c;
+  --painel: #1b3f62;
+  --linha: rgba(233, 238, 244, 0.2);
+  --borda-painel: rgba(233, 238, 244, 0.18);
+  background: var(--papel);
   color: var(--tinta);
 }
 
@@ -313,11 +318,11 @@ a {
   color: var(--acento);
 }
 
-/* Luz de amanhecer no topo das páginas: branco com um véu azul claro */
+/* Luz de amanhecer no topo das páginas: um véu de azul médio sobre o escuro */
 .amanhecer {
   background:
-    radial-gradient(ellipse 80% 60% at 80% 0%, rgba(233, 238, 244, 0.95), transparent 70%),
-    linear-gradient(180deg, #ffffff 0%, #f6f9fb 100%);
+    radial-gradient(ellipse 75% 60% at 80% 0%, rgba(36, 74, 108, 0.75), transparent 70%),
+    #072447;
 }
 
 /* Painel técnico: usado nas telas de exemplo */

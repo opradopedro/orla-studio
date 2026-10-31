@@ -120,7 +120,7 @@ const iniciais = contato
     border-radius: 2.5rem;
     box-shadow: 0 40px 80px -40px rgba(7, 36, 71, 0.55);
     padding: 0.6rem;
-    background: #072447;
+    background: #244a6c;
   }
 
   .celular__topo {
@@ -382,34 +382,35 @@ const iniciais = contato
       passo.addEventListener('animationend', () => passo.classList.remove('entrando'), { once: true });
     };
 
+    // Intervalo entre mensagens: 1,5 s para receber e para enviar. A primeira aparece logo.
+    const INTERVALO = 1500;
+
     async function tocar() {
       if (rodando || !digitando) return;
       rodando = true;
       if (repetir) repetir.hidden = true;
       esconderTudo();
-      await esperar(400);
 
-      for (const passo of passos) {
-        if (passo.dataset.de === 'empresa') {
+      for (const [indice, passo] of passos.entries()) {
+        if (indice === 0) {
+          await esperar(300);
+        } else if (passo.dataset.de === 'empresa') {
           digitando.hidden = false;
           if (status) status.textContent = 'digitando...';
-          await esperar(1600);
+          await esperar(INTERVALO);
           digitando.hidden = true;
           if (status) status.textContent = 'online';
         } else {
           const escolhida = passo.dataset.escolhida;
           if (escolhida) {
-            await esperar(1300);
+            await esperar(INTERVALO - 500);
             figura.querySelector(`[data-opcao="${CSS.escape(escolhida)}"]`)?.classList.add('escolhida');
-            await esperar(600);
+            await esperar(500);
           } else {
-            await esperar(1300);
+            await esperar(INTERVALO);
           }
         }
         mostrar(passo);
-        // tempo de leitura proporcional ao tamanho da mensagem
-        const tamanho = passo.textContent?.trim().length ?? 0;
-        await esperar(700 + Math.min(2800, tamanho * 30));
       }
 
       rodando = false;

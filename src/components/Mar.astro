@@ -4,7 +4,7 @@ interface Props {
   class?: string;
   cor?: string;
 }
-const { class: classe, cor = '#244a6c' } = Astro.props;
+const { class: classe, cor = '#e9eef4' } = Astro.props;
 ---
 
 <canvas class:list={['mar', classe]} data-mar aria-hidden="true" style={`--cor-pontos: ${cor}`}></canvas>
