@@ -1,0 +1,418 @@
+---
+import Base from '../layouts/Base.astro';
+import TopoPagina from '../components/TopoPagina.astro';
+import Icone from '../components/Icone.astro';
+import VisualSistema from '../components/VisualSistema.astro';
+import ChamadaFinal from '../components/ChamadaFinal.astro';
+import { caminho, linkWhatsApp } from '../config';
+
+const situacoes = [
+  {
+    icone: 'globe',
+    tipo: 'Site',
+    situacao: 'Quem procura o seu serviço no Google acha o concorrente e não acha você.',
+    solucao: 'Site rápido, com endereço, horário e botão de WhatsApp, feito para aparecer nas buscas da sua região.',
+  },
+  {
+    icone: 'panel-top',
+    tipo: 'Landing page',
+    situacao: 'Você vai divulgar um serviço novo e não tem uma página para mandar quem se interessa.',
+    solucao: 'Uma página só desse serviço, direto ao ponto, com o botão para chamar no WhatsApp.',
+  },
+  {
+    icone: 'qr-code',
+    tipo: 'Cardápio digital',
+    situacao: 'Cada mudança de preço vira um cardápio novo para imprimir.',
+    solucao: 'Cardápio digital que você atualiza pelo celular, com link e QR code na mesa.',
+  },
+  {
+    icone: 'contact-round',
+    tipo: 'CRM',
+    situacao: 'Os contatos estão espalhados entre WhatsApp, caderno e planilha, e ninguém sabe em que pé está cada cliente.',
+    solucao: 'Um CRM simples, com cada cliente, cada conversa e o próximo passo num lugar só.',
+  },
+  {
+    icone: 'package',
+    tipo: 'Controle de estoque',
+    situacao: 'Você só descobre que um produto acabou quando precisa dele.',
+    solucao: 'Sistema de estoque que mostra o que está acabando antes de faltar.',
+  },
+  {
+    icone: 'calculator',
+    tipo: 'Precificação',
+    situacao: 'O preço é definido no chute e você não sabe quanto sobra de cada venda.',
+    solucao: 'Custo, margem e preço final na mesma tela, atualizados quando o custo muda.',
+  },
+  {
+    icone: 'layout-dashboard',
+    tipo: 'Painéis',
+    situacao: 'As informações estão em três planilhas diferentes e ninguém sabe qual é a certa.',
+    solucao: 'Um painel com os números que importam, atualizado sozinho.',
+  },
+];
+
+// TODO: preencher com os dados reais do projeto da Confeitaria Choco.
+// imagem: coloque o arquivo em public/portfolio/ e escreva o caminho, por exemplo '/portfolio/choco.webp'.
+// link: endereço do site ou do projeto no ar.
+const choco = {
+  nome: 'Confeitaria Choco',
+  descricao: '', // TODO: uma ou duas frases sobre o que foi feito e o que mudou para a confeitaria
+  imagem: '', // TODO
+  link: '', // TODO
+};
+---
+
+<Base
+  titulo="Sites e sistemas para pequenos negócios"
+  descricao="Sites, landing pages, cardápio digital, CRM, controle de estoque, precificação e painéis feitos sob medida para pequenos negócios. Estúdio em Praia Grande (SP)."
+>
+  <TopoPagina rotulo="Sites e sistemas" titulo="Sites e sistemas para o jeito que o seu negócio já funciona.">
+    <p>
+      Site que aparece no Google, cardápio que o cliente abre no celular, CRM que organiza os seus clientes e controle
+      de estoque que substitui o caderno. Feito sob medida, por quem vai te atender depois.
+    </p>
+    <Fragment slot="botoes">
+      <a
+        class="botao"
+        href={linkWhatsApp('Oi! Quero conversar sobre um site ou sistema.')}
+        target="_blank"
+        rel="noopener"
+      >
+        <Icone nome="message-circle" />
+        Contar o que eu preciso
+      </a>
+      <a class="botao botao--contorno" href="#situacoes">Ver exemplos</a>
+    </Fragment>
+    <div slot="visual" class="topo-visual">
+      <VisualSistema />
+      <div class="cardapio painel" aria-hidden="true">
+        <span class="cardapio__topo"><Icone nome="qr-code" /> Cardápio</span>
+        <span class="cardapio__item"><span>Bolo de pote</span><span>R$ 14</span></span>
+        <span class="cardapio__item"><span>Brownie</span><span>R$ 9</span></span>
+        <span class="cardapio__item"><span>Torta de limão</span><span>R$ 16</span></span>
+      </div>
+    </div>
+  </TopoPagina>
+
+  <section class="secao" id="situacoes" aria-labelledby="situacoes-titulo">
+    <div class="conteiner">
+      <div class="cabeca-secao cabeca-secao--lado">
+        <h2 id="situacoes-titulo">Problemas que a gente resolve</h2>
+        <p class="apoio">Situações do dia a dia de pequenos negócios e o que dá para fazer com cada uma.</p>
+      </div>
+
+      <div class="situacoes" role="list">
+        <div class="situacoes__cabeca" aria-hidden="true">
+          <span>Tipo</span>
+          <span>A situação</span>
+          <span>O que a gente faz</span>
+        </div>
+        {
+          situacoes.map((item) => (
+            <div class="situacao" role="listitem" data-revelar>
+              <div class="situacao__tipo">
+                <span class="selo-icone">
+                  <Icone nome={item.icone} />
+                </span>
+                <h3>{item.tipo}</h3>
+              </div>
+              <p class="situacao__antes">{item.situacao}</p>
+              <p class="situacao__depois">
+                <Icone nome="arrow-right" class="situacao__seta" />
+                {item.solucao}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="secao portfolio" aria-labelledby="portfolio-titulo">
+    <div class="conteiner">
+      <div class="cabeca-secao cabeca-secao--lado">
+        <h2 id="portfolio-titulo">Projetos</h2>
+        <p class="apoio">O começo do nosso portfólio.</p>
+      </div>
+
+      <div class="portfolio__grade">
+        <article class="projeto painel">
+          <div class="projeto__imagem">
+            {
+              choco.imagem ? (
+                <img src={caminho(choco.imagem)} alt={`Tela do projeto da ${choco.nome}`} loading="lazy" decoding="async" />
+              ) : (
+                <div class="projeto__reservado">
+                  <span class="projeto__bolinhas" aria-hidden="true"><i /><i /><i /></span>
+                  <span class="projeto__aviso">
+                    <Icone nome="image-off" />
+                    Imagem do projeto em breve
+                  </span>
+                </div>
+              )
+            }
+          </div>
+          <div class="bloco projeto__texto">
+            <p class="projeto__rotulo">Primeiro projeto</p>
+            <h3>{choco.nome}</h3>
+            <p>{choco.descricao || 'Os detalhes deste projeto entram aqui em breve.'}</p>
+            {
+              choco.link && (
+                <a class="link" href={choco.link} target="_blank" rel="noopener">
+                  Ver o projeto
+                </a>
+              )
+            }
+          </div>
+        </article>
+
+        <a
+          class="proximo"
+          href={linkWhatsApp('Oi! Quero conversar sobre um projeto.')}
+          target="_blank"
+          rel="noopener"
+        >
+          <span class="selo-icone"><Icone nome="plus" /></span>
+          <span class="bloco">
+            <strong>O próximo pode ser o seu</strong>
+            <span class="proximo__texto">Conta o que você precisa e a gente responde pelo WhatsApp.</span>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <ChamadaFinal
+    titulo="Tem outra ideia de automação ou sistema? Conta pra gente."
+    texto="Se tem uma tarefa que toma o seu tempo toda semana, vale a conversa. A gente fala com sinceridade se dá para resolver."
+    botao="Contar a minha ideia"
+    mensagem="Oi! Tenho uma ideia de automação ou sistema e queria conversar."
+  />
+</Base>
+
+<style>
+  /* Visual do topo: painel com um cardápio por cima */
+  .topo-visual {
+    position: relative;
+    padding-bottom: 3rem;
+  }
+
+  .cardapio {
+    position: absolute;
+    left: -1.5rem;
+    bottom: 0;
+    display: grid;
+    gap: 0.5rem;
+    width: 12.5rem;
+    padding: 1rem;
+    background: var(--marinho-painel-2);
+    font-size: 0.8125rem;
+    box-shadow: 0 24px 48px -20px rgba(2, 12, 26, 0.8);
+    transform: translateY(calc((0.5 - var(--p, 0.5)) * 60px));
+  }
+
+  .cardapio__topo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.25rem;
+    font-weight: 700;
+  }
+
+  .cardapio__topo :global(.icone) {
+    width: 1rem;
+    height: 1rem;
+    color: var(--azul-claro);
+  }
+
+  .cardapio__item {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 0.5rem;
+    border-top: 1px solid rgba(185, 204, 224, 0.1);
+    color: var(--azul-claro);
+  }
+
+  .cardapio__item span:last-child {
+    color: var(--branco);
+    font-weight: 500;
+  }
+
+  /* Situações em formato de tabela */
+  .situacoes__cabeca {
+    display: none;
+  }
+
+  .situacao {
+    display: grid;
+    gap: 1rem;
+    padding-block: 1.75rem;
+    border-top: 1px solid var(--linha);
+    font-size: var(--t-corpo);
+  }
+
+  .situacao:last-child {
+    border-bottom: 1px solid var(--linha);
+  }
+
+  .situacao__tipo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .situacao__tipo h3 {
+    font-size: inherit;
+    letter-spacing: 0.01em;
+  }
+
+  .situacao__antes {
+    color: var(--azul-claro);
+  }
+
+  .situacao__depois {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .situacao__depois :global(.situacao__seta) {
+    margin-top: 0.2rem;
+    color: var(--azul-claro);
+  }
+
+  @media (min-width: 60rem) {
+    .situacoes__cabeca,
+    .situacao {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 4fr) minmax(0, 5fr);
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .situacoes__cabeca {
+      padding-bottom: 1rem;
+      font-size: var(--t-rotulo);
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--azul-claro);
+    }
+  }
+
+  /* Portfólio */
+  .portfolio {
+    padding-top: 0;
+  }
+
+  .portfolio__grade {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .projeto {
+    display: grid;
+    overflow: hidden;
+  }
+
+  .projeto__imagem {
+    aspect-ratio: 16 / 10;
+    border-bottom: 1px solid var(--borda-painel);
+    background: var(--marinho-fundo);
+  }
+
+  .projeto__imagem img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .projeto__reservado {
+    position: relative;
+    display: grid;
+    place-items: center;
+    height: 100%;
+    background-image:
+      linear-gradient(rgba(185, 204, 224, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(185, 204, 224, 0.06) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  .projeto__bolinhas {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    display: flex;
+    gap: 0.35rem;
+  }
+
+  .projeto__bolinhas i {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 1px solid rgba(185, 204, 224, 0.45);
+  }
+
+  .projeto__aviso {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--azul-claro);
+    font-size: var(--t-pequeno);
+  }
+
+  .projeto__texto {
+    padding: 1.75rem;
+  }
+
+  .bloco .projeto__rotulo {
+    margin: 0 0 0.25rem;
+  }
+
+  .projeto__texto .link {
+    margin-top: 1rem;
+  }
+
+  .proximo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.25rem;
+    padding: 1.75rem;
+    border: 1px dashed rgba(185, 204, 224, 0.4);
+    border-radius: var(--raio-painel);
+    text-decoration: none;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+  }
+
+  .proximo:hover {
+    border-color: var(--azul-claro);
+    background: rgba(185, 204, 224, 0.05);
+  }
+
+  .proximo__texto {
+    display: block;
+    margin-top: 0.35rem;
+    color: var(--azul-claro);
+  }
+
+  @media (min-width: 60rem) {
+    .portfolio__grade {
+      grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+    }
+
+    .projeto {
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+    }
+
+    .projeto__imagem {
+      aspect-ratio: auto;
+      min-height: 20rem;
+      border-bottom: 0;
+      border-right: 1px solid var(--borda-painel);
+    }
+
+    .projeto__texto {
+      align-self: end;
+    }
+  }
+</style>
