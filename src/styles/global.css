@@ -32,6 +32,9 @@
   --azul-tinta: #2e4a6b;
   --linha: rgba(185, 204, 224, 0.2);
   --linha-clara: rgba(7, 36, 71, 0.14);
+  --marinho-painel: #0a2a50;
+  --marinho-painel-2: #0e325d;
+  --borda-painel: rgba(185, 204, 224, 0.16);
 
   --fonte: 'Montserrat', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
@@ -49,6 +52,7 @@
   --largura: 76rem;
   --secao: clamp(5rem, 3.5rem + 7vw, 9rem);
   --raio: 8px;
+  --raio-painel: 18px;
   --altura-menu: 4.5rem;
 }
 
@@ -297,5 +301,138 @@ a {
   .js [data-revelar].visivel {
     opacity: 1;
     transform: none;
+  }
+}
+
+/* Ícones */
+.icone {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex: none;
+}
+
+.selo-icone {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--borda-painel);
+  border-radius: 12px;
+  background: var(--marinho-painel);
+  color: var(--azul-claro);
+}
+
+.claro .selo-icone {
+  background: var(--branco);
+  border-color: var(--linha-clara);
+  color: var(--marinho);
+}
+
+/* Grade técnica de fundo, como papel milimetrado que some nas bordas */
+.grade-tecnica {
+  position: relative;
+  isolation: isolate;
+}
+
+.grade-tecnica::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(185, 204, 224, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(185, 204, 224, 0.07) 1px, transparent 1px);
+  background-size: 56px 56px;
+  background-position: center top;
+  mask-image: radial-gradient(ellipse 80% 70% at 60% 30%, #000 20%, transparent 75%);
+}
+
+/* Luz de amanhecer no topo das páginas */
+.amanhecer {
+  background:
+    radial-gradient(ellipse 70% 55% at 75% 0%, rgba(185, 204, 224, 0.13), transparent 70%),
+    var(--marinho);
+}
+
+/* Painel técnico: usado nas telas de exemplo */
+.painel {
+  border: 1px solid var(--borda-painel);
+  border-radius: var(--raio-painel);
+  background: var(--marinho-painel);
+}
+
+/* Bloco de texto: título e texto no mesmo tamanho, diferença só no peso e na cor */
+.bloco {
+  font-size: var(--t-corpo);
+  line-height: 1.6;
+}
+
+.bloco h3,
+.bloco strong {
+  display: block;
+  font-size: inherit;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1.4;
+  color: var(--branco);
+}
+
+.bloco p {
+  margin-top: 0.35rem;
+  color: var(--azul-claro);
+}
+
+.claro .bloco h3,
+.claro .bloco strong {
+  color: var(--marinho);
+}
+
+.claro .bloco p {
+  color: var(--azul-tinta);
+}
+
+/* Cabeçalho de seção */
+.cabeca-secao {
+  display: grid;
+  gap: 1.25rem;
+  margin-bottom: clamp(3rem, 2rem + 3vw, 4.5rem);
+}
+
+.cabeca-secao h2 {
+  max-width: 16em;
+}
+
+@media (min-width: 60rem) {
+  .cabeca-secao--lado {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    align-items: end;
+    gap: 4rem;
+  }
+}
+
+/* Lista com ícones e fios entre os itens */
+.lista-icones {
+  list-style: none;
+  padding: 0;
+  display: grid;
+}
+
+.lista-icones > li {
+  display: flex;
+  gap: 1.25rem;
+  padding-block: 1.5rem;
+  border-top: 1px solid var(--linha);
+}
+
+.claro .lista-icones > li {
+  border-color: var(--linha-clara);
+}
+
+@media (min-width: 60rem) {
+  .lista-icones--duas {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 4rem;
   }
 }

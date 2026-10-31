@@ -1,0 +1,31 @@
+---
+// Ícones Lucide (traço fino), lidos na hora do build. Nomes em https://lucide.dev/icons
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+
+interface Props {
+  nome: string;
+  class?: string;
+}
+
+const { nome, class: classe } = Astro.props;
+const arquivo = join(process.cwd(), 'node_modules', 'lucide-static', 'icons', `${nome}.svg`);
+const desenho = readFileSync(arquivo, 'utf8')
+  .replace(/<!--[\s\S]*?-->/g, '')
+  .replace(/^[\s\S]*?<svg[^>]*>/, '')
+  .replace(/<\/svg>\s*$/, '')
+  .trim();
+---
+
+<svg
+  class:list={['icone', classe]}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.5"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+  focusable="false"
+  set:html={desenho}
+/>

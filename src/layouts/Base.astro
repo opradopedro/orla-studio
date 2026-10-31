@@ -86,24 +86,7 @@ const dadosEstruturados = {
     <Rodape />
 
     <script>
-      // Entrada suave dos blocos marcados com data-revelar
-      const alvos = document.querySelectorAll<HTMLElement>('[data-revelar]');
-      if ('IntersectionObserver' in window && alvos.length) {
-        const observador = new IntersectionObserver(
-          (entradas) => {
-            for (const entrada of entradas) {
-              if (entrada.isIntersecting) {
-                entrada.target.classList.add('visivel');
-                observador.unobserve(entrada.target);
-              }
-            }
-          },
-          { rootMargin: '0px 0px -10% 0px', threshold: 0.15 },
-        );
-        alvos.forEach((alvo) => observador.observe(alvo));
-      } else {
-        alvos.forEach((alvo) => alvo.classList.add('visivel'));
-      }
+      import '../scripts/rolagem.ts';
     </script>
   </body>
 </html>

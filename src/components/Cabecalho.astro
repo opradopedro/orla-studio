@@ -1,6 +1,6 @@
 ---
 import Marca from './Marca.astro';
-import IconeWhatsApp from './IconeWhatsApp.astro';
+import Icone from './Icone.astro';
 import { caminho, linkWhatsApp, site } from '../config';
 
 const paginas = [
@@ -33,7 +33,7 @@ const atual = Astro.url.pathname.slice(site.base.length).replace(/\/$/, '') || '
         }
         <li class="cabecalho__whats-menu">
           <a class="botao" href={linkWhatsApp()} target="_blank" rel="noopener">
-            <IconeWhatsApp />
+            <Icone nome="message-circle" />
             Falar no WhatsApp
           </a>
         </li>
@@ -42,7 +42,7 @@ const atual = Astro.url.pathname.slice(site.base.length).replace(/\/$/, '') || '
 
     <div class="cabecalho__acoes">
       <a class="botao cabecalho__whats" href={linkWhatsApp()} target="_blank" rel="noopener">
-        <IconeWhatsApp />
+        <Icone nome="message-circle" />
         <span><span class="cabecalho__falar">Falar no </span>WhatsApp</span>
       </a>
       <button

@@ -1,0 +1,237 @@
+---
+// Tela de exemplo: painel de estoque e vendas num navegador.
+import Icone from './Icone.astro';
+
+const estoque = [
+  { item: 'Chocolate 70%', nivel: 82, repor: false },
+  { item: 'Farinha de trigo', nivel: 34, repor: true },
+  { item: 'Embalagens', nivel: 14, repor: true },
+];
+const semana = [
+  { dia: 'S', valor: 42 },
+  { dia: 'T', valor: 55 },
+  { dia: 'Q', valor: 48 },
+  { dia: 'Q', valor: 66 },
+  { dia: 'S', valor: 90 },
+  { dia: 'S', valor: 78 },
+];
+---
+
+<div class="visual" aria-hidden="true" data-progresso>
+  <div class="janela painel">
+    <div class="janela__barra">
+      <span class="janela__bolinhas"><i></i><i></i><i></i></span>
+      <span class="janela__endereco">painel.suaempresa.com.br</span>
+    </div>
+    <div class="janela__corpo">
+      <nav class="janela__menu">
+        <span class="ativo"><Icone nome="layout-dashboard" /></span>
+        <span><Icone nome="package" /></span>
+        <span><Icone nome="calculator" /></span>
+        <span><Icone nome="users" /></span>
+      </nav>
+      <div class="janela__conteudo">
+        <div class="cartao">
+          <div class="cartao__titulo">
+            <Icone nome="package" />
+            Estoque
+          </div>
+          <ul class="estoque">
+            {
+              estoque.map((e) => (
+                <li>
+                  <span class="estoque__nome">{e.item}</span>
+                  {e.repor && <span class="estoque__repor">repor</span>}
+                  <span class="estoque__barra">
+                    <span style={`--nivel: ${e.nivel}%`} />
+                  </span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <div class="cartao">
+          <div class="cartao__titulo">
+            <Icone nome="chart-no-axes-column" />
+            Vendas da semana
+          </div>
+          <div class="grafico">
+            {
+              semana.map((d) => (
+                <span class="grafico__coluna">
+                  <span class="grafico__barra" style={`--valor: ${d.valor}%`} />
+                  <span>{d.dia}</span>
+                </span>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .visual {
+    font-size: 0.8125rem;
+  }
+
+  .janela {
+    overflow: hidden;
+    box-shadow: 0 30px 60px -30px rgba(2, 12, 26, 0.7);
+  }
+
+  .janela__barra {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--borda-painel);
+  }
+
+  .janela__bolinhas {
+    display: flex;
+    gap: 0.35rem;
+  }
+
+  .janela__bolinhas i {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 1px solid rgba(185, 204, 224, 0.45);
+  }
+
+  .janela__endereco {
+    flex: 1;
+    padding: 0.3rem 0.75rem;
+    border-radius: 999px;
+    background: rgba(185, 204, 224, 0.08);
+    color: var(--azul-claro);
+    font-size: 0.75rem;
+  }
+
+  .janela__corpo {
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+  }
+
+  .janela__menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 0;
+    border-right: 1px solid var(--borda-painel);
+    color: var(--azul-claro);
+  }
+
+  .janela__menu span {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 8px;
+  }
+
+  .janela__menu .icone {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .janela__menu .ativo {
+    background: var(--azul-claro);
+    color: var(--marinho);
+  }
+
+  .janela__conteudo {
+    display: grid;
+    gap: 0.75rem;
+    padding: 1rem;
+  }
+
+  .cartao {
+    padding: 0.9rem 1rem;
+    border: 1px solid var(--borda-painel);
+    border-radius: 12px;
+    background: var(--marinho-painel-2);
+  }
+
+  .cartao__titulo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+    font-weight: 700;
+  }
+
+  .cartao__titulo .icone {
+    width: 1rem;
+    height: 1rem;
+    color: var(--azul-claro);
+  }
+
+  .estoque {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.6rem;
+  }
+
+  .estoque li {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.35rem;
+  }
+
+  .estoque__repor {
+    padding: 0 0.5rem;
+    border-radius: 999px;
+    background: var(--branco);
+    color: var(--marinho);
+    font-size: 0.6875rem;
+    font-weight: 700;
+  }
+
+  .estoque__barra {
+    grid-column: 1 / -1;
+    height: 4px;
+    border-radius: 4px;
+    background: rgba(185, 204, 224, 0.15);
+    overflow: hidden;
+  }
+
+  .estoque__barra span {
+    display: block;
+    height: 100%;
+    width: var(--nivel);
+    background: var(--azul-claro);
+  }
+
+  .grafico {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.6rem;
+    height: 6rem;
+  }
+
+  .grafico__coluna {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.35rem;
+    height: 100%;
+    color: var(--azul-claro);
+    font-size: 0.6875rem;
+  }
+
+  .grafico__barra {
+    width: 100%;
+    height: calc(var(--valor) * (0.45 + var(--p, 0.5) * 0.5));
+    min-height: 4px;
+    border-radius: 4px 4px 0 0;
+    background: linear-gradient(var(--azul-claro), rgba(185, 204, 224, 0.35));
+  }
+</style>
