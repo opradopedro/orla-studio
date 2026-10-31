@@ -6,7 +6,7 @@ interface Props {
   // true quando a marca fica sobre fundo azul escuro
   sobreEscuro?: boolean;
 }
-const { tamanho = 'menu', sobreEscuro = false } = Astro.props;
+const { tamanho = 'menu', sobreEscuro = true } = Astro.props;
 const cor = sobreEscuro ? 'branco' : 'marinho';
 ---
 

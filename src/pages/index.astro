@@ -258,7 +258,7 @@ const passos = [
   </section>
 
   <!-- Como trabalhamos: no computador, os passos andam para o lado com a rolagem -->
-  <Onda cor="var(--marca-claro)" />
+  <Onda cor="var(--azul-medio)" />
   <section class="processo claro" aria-labelledby="processo-titulo" data-horizontal>
     <div class="processo__fixo">
       <div class="conteiner">
@@ -296,7 +296,7 @@ const passos = [
   </section>
 
   <!-- Quem somos -->
-  <Onda cor="var(--marca-claro)" invertida />
+  <Onda cor="var(--azul-medio)" invertida />
 
   <section class="secao quem" aria-labelledby="quem-titulo">
     <div class="conteiner quem__grade">
@@ -444,7 +444,7 @@ const passos = [
     margin-top: 0.85rem;
     padding: 0.5rem 0.9rem;
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.92);
+    background: var(--painel);
   }
 
   @media (max-width: 47.99rem) {
@@ -700,7 +700,7 @@ const passos = [
       position: absolute;
       inset: 0;
       border-radius: calc(var(--raio-painel) + 8px);
-      background: var(--marca-claro);
+      background: var(--azul-medio);
       overflow: hidden;
     }
 
@@ -893,7 +893,7 @@ const passos = [
     .quem__lista {
       padding: 0.5rem 2rem;
       border-radius: var(--raio-painel);
-      background: var(--marca-claro);
+      background: var(--painel);
     }
   }
 </style>
