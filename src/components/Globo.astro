@@ -1,0 +1,19 @@
+---
+// Globo de pontos com a América do Sul em destaque e Praia Grande marcada
+// (desenhado por src/scripts/telas.ts).
+interface Props {
+  class?: string;
+  cor?: string;
+}
+const { class: classe, cor = '#244a6c' } = Astro.props;
+---
+
+<canvas class:list={['globo', classe]} data-globo aria-hidden="true" style={`--cor-pontos: ${cor}`}></canvas>
+
+<style>
+  .globo {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1;
+  }
+</style>

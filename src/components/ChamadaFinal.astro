@@ -1,9 +1,8 @@
 ---
-// Chamada final, centralizada como na apresentação da marca. O emblema fica
-// dentro de anéis que giram com a rolagem.
-import Aneis from './Aneis.astro';
+// Chamada final em azul escuro, com o globo de pontos e Praia Grande marcada.
+import Globo from './Globo.astro';
 import Icone from './Icone.astro';
-import { caminho, linkWhatsApp } from '../config';
+import { linkWhatsApp } from '../config';
 
 interface Props {
   titulo?: string;
@@ -20,71 +19,87 @@ const {
 } = Astro.props;
 ---
 
-<section class="secao chamada grade-tecnica" aria-labelledby="chamada-titulo" data-progresso>
-  <div class="conteiner chamada__conteudo">
-    <div class="chamada__simbolo">
-      <Aneis class="chamada__aneis" />
-      <img
-        class="chamada__emblema"
-        src={caminho('/marca/emblema-branco-240.webp')}
-        alt=""
-        width="230"
-        height="240"
-        loading="lazy"
-        decoding="async"
-      />
+<section class="chamada" aria-labelledby="chamada-titulo">
+  <div class="conteiner">
+    <div class="chamada__caixa escuro">
+      <div class="chamada__texto">
+        <p class="rotulo">Vamos conversar</p>
+        <h2 id="chamada-titulo">{titulo}</h2>
+        <p class="apoio">{texto}</p>
+        <a class="botao" href={linkWhatsApp(mensagem)} target="_blank" rel="noopener">
+          <Icone nome="message-circle" />
+          {botao}
+        </a>
+      </div>
+      <div class="chamada__globo">
+        <Globo cor="#e9eef4" />
+        <p class="chamada__lugar">
+          <Icone nome="map-pin" />
+          Praia Grande, SP. Atendemos todo o Brasil.
+        </p>
+      </div>
     </div>
-    <p class="rotulo">Vamos conversar</p>
-    <h2 id="chamada-titulo">{titulo}</h2>
-    <p class="apoio">{texto}</p>
-    <a class="botao" href={linkWhatsApp(mensagem)} target="_blank" rel="noopener">
-      <Icone nome="message-circle" />
-      {botao}
-    </a>
   </div>
 </section>
 
 <style>
   .chamada {
+    padding-block: var(--secao);
+  }
+
+  .chamada__caixa {
+    display: grid;
+    gap: 2.5rem;
+    padding: clamp(2rem, 1rem + 4vw, 4.5rem);
+    border-radius: calc(var(--raio-painel) + 8px);
     overflow: hidden;
   }
 
-  .chamada__conteudo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-
-  .chamada__simbolo {
-    position: relative;
+  .chamada__texto {
     display: grid;
-    place-items: center;
-    width: 13rem;
-    height: 13rem;
-    margin-bottom: 2.5rem;
-  }
-
-  .chamada__simbolo :global(.chamada__aneis) {
-    position: absolute;
-    inset: 0;
-  }
-
-  .chamada__emblema {
-    width: 4.25rem;
-    height: auto;
+    justify-items: start;
+    gap: 1.25rem;
   }
 
   .chamada h2 {
-    margin-top: 1.25rem;
-    max-width: 14em;
-  }
-
-  .chamada .apoio {
-    margin-top: 1.25rem;
+    max-width: 13em;
   }
 
   .chamada .botao {
-    margin-top: 2.5rem;
+    margin-top: 1rem;
+  }
+
+  .chamada__globo {
+    position: relative;
+    width: min(100%, 26rem);
+    justify-self: center;
+  }
+
+  .chamada__lugar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    font-size: var(--t-pequeno);
+    color: var(--acento);
+  }
+
+  @media (max-width: 47.99rem) {
+    .chamada .botao {
+      width: 100%;
+    }
+
+    .chamada__globo {
+      width: min(100%, 18rem);
+    }
+  }
+
+  @media (min-width: 60rem) {
+    .chamada__caixa {
+      grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+      align-items: center;
+      gap: 3rem;
+    }
   }
 </style>
