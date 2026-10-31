@@ -1,0 +1,78 @@
+---
+// Etapas em sequência numa linha vertical que se preenche conforme a rolagem.
+import Icone from './Icone.astro';
+
+interface Props {
+  etapas: { quando: string; titulo: string; texto: string; icone: string }[];
+}
+
+const { etapas } = Astro.props;
+---
+
+<ol class="linha-tempo" data-progresso>
+  <span class="linha-tempo__trilho" aria-hidden="true"><span></span></span>
+  {
+    etapas.map((etapa) => (
+      <li class="etapa" data-revelar>
+        <span class="selo-icone etapa__selo">
+          <Icone nome={etapa.icone} />
+        </span>
+        <div class="bloco etapa__texto">
+          <p class="etapa__quando">{etapa.quando}</p>
+          <h3>{etapa.titulo}</h3>
+          <p>{etapa.texto}</p>
+        </div>
+      </li>
+    ))
+  }
+</ol>
+
+<style>
+  .linha-tempo {
+    position: relative;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 2.75rem;
+  }
+
+  .linha-tempo__trilho {
+    position: absolute;
+    left: calc(1.375rem - 0.5px);
+    top: 1.5rem;
+    bottom: 1.5rem;
+    width: 1px;
+    background: var(--linha);
+  }
+
+  .linha-tempo__trilho span {
+    display: block;
+    height: 100%;
+    background: var(--azul-claro);
+    transform-origin: top;
+    transform: scaleY(clamp(0, calc((var(--p, 1) - 0.2) * 1.8), 1));
+  }
+
+  .etapa {
+    position: relative;
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .etapa__selo {
+    position: relative;
+    background: var(--marinho);
+  }
+
+  .etapa__texto {
+    max-width: 36em;
+    padding-top: 0.6rem;
+  }
+
+  .bloco .etapa__quando {
+    margin: 0 0 0.25rem;
+    color: var(--azul-claro);
+    font-weight: 500;
+  }
+</style>
