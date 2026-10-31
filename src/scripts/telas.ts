@@ -46,7 +46,6 @@ function criarMar(canvas: HTMLCanvasElement): Desenho {
   const { contexto, escala } = prepararCanvas(canvas);
   let largura = 0;
   let altura = 0;
-  let colunas = 0;
   const linhas = 26;
   const [r, g, b] = hexParaRgb(corDe(canvas, '--cor-pontos', '#244a6c'));
 
@@ -55,7 +54,6 @@ function criarMar(canvas: HTMLCanvasElement): Desenho {
     altura = canvas.clientHeight;
     canvas.width = Math.round(largura * escala);
     canvas.height = Math.round(altura * escala);
-    colunas = largura < 700 ? 46 : 84;
   }
 
   function desenhar(tempo: number) {
@@ -67,23 +65,26 @@ function criarMar(canvas: HTMLCanvasElement): Desenho {
 
     const foco = altura * 1.1;
     const alturaCamera = 1.1;
+    // Pontos com espaçamento fixo no "mar": as linhas distantes ficam densas e as próximas, espaçadas.
+    const passo = largura < 700 ? 0.2 : 0.13;
     for (let j = 0; j < linhas; j++) {
       // j = 0 é a linha mais distante (no horizonte)
-      const z = 1.2 + (linhas - 1 - j) * 0.55;
+      const z = 1.2 + (linhas - 1 - j) * 0.5;
       const s = foco / z;
       const proximidade = j / (linhas - 1);
-      for (let i = 0; i < colunas; i++) {
-        const x = (i / (colunas - 1) - 0.5) * 2 * (largura / foco) * z * 0.6;
+      const meiaLargura = (largura / 2 / s) * 1.05;
+      const inicio = -meiaLargura + ((j % 2) * passo) / 2;
+      for (let x = inicio; x <= meiaLargura; x += passo) {
         const onda =
           0.22 * Math.sin(x * 1.6 + t * 0.9 + z * 0.55 + rolagem) +
           0.12 * Math.sin(x * 3.1 - t * 0.6 + z * 1.1) +
           0.08 * Math.cos(z * 2.2 + t * 0.7);
         const tx = largura / 2 + x * s;
         const ty = (alturaCamera - onda) * s;
-        if (tx < -4 || tx > largura + 4 || ty < -4 || ty > altura + 4) continue;
-        const tamanho = 0.7 + proximidade * 1.9 + onda * 1.2;
-        const alfa = 0.12 + proximidade * 0.55 + onda * 0.4;
-        contexto.fillStyle = `rgba(${r}, ${g}, ${b}, ${Math.max(0.05, Math.min(0.85, alfa))})`;
+        if (ty < -4 || ty > altura + 4) continue;
+        const tamanho = 0.6 + proximidade * 2 + onda * 1.2;
+        const alfa = 0.05 + proximidade * proximidade * 0.6 + onda * 0.35;
+        contexto.fillStyle = `rgba(${r}, ${g}, ${b}, ${Math.max(0.03, Math.min(0.8, alfa))})`;
         contexto.fillRect(tx - tamanho / 2, ty - tamanho / 2, tamanho, tamanho);
       }
     }
@@ -172,7 +173,7 @@ function criarGlobo(canvas: HTMLCanvasElement): Desenho {
         const tamanho = 1.4 + p.z * 1.4;
         contexto.fillRect(px - tamanho / 2, py - tamanho / 2, tamanho, tamanho);
       } else {
-        contexto.fillStyle = `rgba(${r}, ${g}, ${b}, ${0.06 + p.z * 0.16})`;
+        contexto.fillStyle = `rgba(${r}, ${g}, ${b}, ${0.1 + p.z * 0.22})`;
         const tamanho = 0.8 + p.z * 0.8;
         contexto.fillRect(px - tamanho / 2, py - tamanho / 2, tamanho, tamanho);
       }
