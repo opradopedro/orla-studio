@@ -29,7 +29,7 @@ const iniciais = contato
 ---
 
 <figure class:list={['conversa', classe]} data-conversa>
-  <div class="celular" aria-hidden="true">
+  <div class="celular escuro" aria-hidden="true">
     <div class="celular__topo">
       <span class="celular__avatar">{iniciais}</span>
       <span class="celular__contato">
@@ -116,10 +116,11 @@ const iniciais = contato
     display: flex;
     flex-direction: column;
     height: 36rem;
-    border: 1px solid rgba(185, 204, 224, 0.4);
+    border: 0;
     border-radius: 2.5rem;
+    box-shadow: 0 40px 80px -40px rgba(7, 36, 71, 0.55);
     padding: 0.6rem;
-    background: var(--marinho-fundo);
+    background: #072447;
   }
 
   .celular__topo {
@@ -138,8 +139,8 @@ const iniciais = contato
     width: 2.25rem;
     height: 2.25rem;
     border-radius: 50%;
-    background: var(--azul-claro);
-    color: var(--marinho);
+    background: var(--acento);
+    color: var(--papel);
     font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: 0.05em;
@@ -152,7 +153,7 @@ const iniciais = contato
 
   .celular__status {
     font-size: 0.75rem;
-    color: var(--azul-claro);
+    color: var(--acento);
   }
 
   .celular__mensagens {
@@ -166,7 +167,11 @@ const iniciais = contato
     margin: 0;
     padding: 1rem 0.75rem 1.25rem;
     border-radius: 0 0 2rem 2rem;
-    background: #0a2a50;
+    background: #e9eef4;
+    /* A tela do celular volta para o tema claro */
+    --papel: #ffffff;
+    --tinta: #072447;
+    --acento: #244a6c;
   }
 
   .msg {
@@ -193,14 +198,15 @@ const iniciais = contato
   }
 
   .msg--empresa .msg__balao {
-    background: #143a66;
-    color: var(--branco);
+    background: var(--papel);
+    color: var(--tinta);
+    box-shadow: 0 1px 1px rgba(7, 36, 71, 0.06);
     border-top-left-radius: 0.25rem;
   }
 
   .msg--cliente .msg__balao {
-    background: var(--branco);
-    color: var(--marinho);
+    background: var(--acento);
+    color: var(--papel);
     border-top-right-radius: 0.25rem;
   }
 
@@ -225,7 +231,7 @@ const iniciais = contato
     margin: 0.1rem 0 0.5rem;
     padding: 0.6rem;
     border-radius: 0.5rem;
-    background: rgba(185, 204, 224, 0.12);
+    background: color-mix(in srgb, var(--acento) 12%, transparent);
     font-size: 0.8125rem;
   }
 
@@ -234,7 +240,7 @@ const iniciais = contato
     width: 1.1rem;
     height: 1.1rem;
     margin-top: 0.1rem;
-    color: var(--azul-claro);
+    color: var(--acento);
   }
 
   .msg__local > span {
@@ -243,7 +249,7 @@ const iniciais = contato
   }
 
   .msg__local span span {
-    color: var(--azul-claro);
+    color: var(--acento);
   }
 
   .msg__opcoes {
@@ -255,18 +261,19 @@ const iniciais = contato
 
   .msg__opcao {
     padding: 0.5rem 0.75rem;
-    border: 1px solid rgba(185, 204, 224, 0.45);
+    border: 1px solid color-mix(in srgb, var(--acento) 45%, transparent);
     border-radius: 0.6rem;
-    color: var(--branco);
+    background: var(--papel);
+    color: var(--tinta);
     font-weight: 500;
     text-align: center;
     transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   .msg__opcao.escolhida {
-    background: var(--azul-claro);
-    border-color: var(--azul-claro);
-    color: var(--marinho);
+    background: var(--acento);
+    border-color: var(--acento);
+    color: var(--papel);
   }
 
   .msg--digitando .msg__balao {
@@ -279,7 +286,7 @@ const iniciais = contato
     width: 0.4rem;
     height: 0.4rem;
     border-radius: 50%;
-    background: var(--azul-claro);
+    background: var(--acento);
     animation: digitando 1.2s ease-in-out infinite;
   }
 
@@ -331,19 +338,19 @@ const iniciais = contato
     margin-top: 1rem;
     padding-inline: 0.5rem;
     font-size: 0.8125rem;
-    color: var(--azul-claro);
+    color: var(--acento);
   }
 
   .conversa__repetir {
     padding: 0.4rem 0;
     border: 0;
     background: none;
-    color: var(--branco);
+    color: var(--tinta);
     font: inherit;
     font-weight: 500;
     text-decoration: underline;
     text-underline-offset: 0.3em;
-    text-decoration-color: rgba(185, 204, 224, 0.6);
+    text-decoration-color: color-mix(in srgb, var(--acento) 60%, transparent);
     cursor: pointer;
   }
 
@@ -380,27 +387,29 @@ const iniciais = contato
       rodando = true;
       if (repetir) repetir.hidden = true;
       esconderTudo();
-      await esperar(600);
+      await esperar(400);
 
       for (const passo of passos) {
         if (passo.dataset.de === 'empresa') {
           digitando.hidden = false;
           if (status) status.textContent = 'digitando...';
-          await esperar(1200);
+          await esperar(1600);
           digitando.hidden = true;
           if (status) status.textContent = 'online';
         } else {
           const escolhida = passo.dataset.escolhida;
           if (escolhida) {
-            await esperar(900);
+            await esperar(1300);
             figura.querySelector(`[data-opcao="${CSS.escape(escolhida)}"]`)?.classList.add('escolhida');
-            await esperar(500);
+            await esperar(600);
           } else {
-            await esperar(1000);
+            await esperar(1300);
           }
         }
         mostrar(passo);
-        await esperar(500);
+        // tempo de leitura proporcional ao tamanho da mensagem
+        const tamanho = passo.textContent?.trim().length ?? 0;
+        await esperar(700 + Math.min(2800, tamanho * 30));
       }
 
       rodando = false;
@@ -417,7 +426,7 @@ const iniciais = contato
           tocar();
         }
       },
-      { threshold: 0.4 },
+      { threshold: 0.15 },
     );
     observador.observe(figura);
   }

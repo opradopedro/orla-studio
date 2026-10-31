@@ -2,6 +2,7 @@
 // Topo das páginas internas: texto à esquerda, tela de exemplo à direita (slot "visual"),
 // linha do horizonte e ondas embaixo, como no início.
 import Onda from './Onda.astro';
+import Mar from './Mar.astro';
 
 interface Props {
   rotulo: string;
@@ -13,7 +14,7 @@ const { rotulo, titulo, id = 'topo-titulo' } = Astro.props;
 const temVisual = Astro.slots.has('visual');
 ---
 
-<section class:list={['topo amanhecer grade-tecnica', { 'topo--visual': temVisual }]} aria-labelledby={id} data-progresso>
+<section class:list={['topo amanhecer', { 'topo--visual': temVisual }]} aria-labelledby={id} data-progresso>
   <div class="conteiner topo__grade">
     <div class="topo__texto">
       <p class="rotulo">{rotulo}</p>
@@ -37,13 +38,15 @@ const temVisual = Astro.slots.has('visual');
       )
     }
   </div>
-  <div class="topo__horizonte" aria-hidden="true"></div>
-  <Onda tipo="linhas" class="topo__ondas" />
+  <div class="topo__mar" aria-hidden="true">
+    <Mar />
+    <Onda tipo="linhas" class="topo__ondas" />
+  </div>
 </section>
 
 <style>
   .topo {
-    --altura-ondas: clamp(3.5rem, 2.5rem + 4vw, 6rem);
+    --altura-ondas: clamp(7rem, 4rem + 9vw, 12rem);
     position: relative;
     padding-top: clamp(3rem, 2rem + 5vw, 6rem);
     padding-bottom: calc(var(--altura-ondas) + clamp(2.5rem, 2rem + 2vw, 4rem));
@@ -84,21 +87,22 @@ const temVisual = Astro.slots.has('visual');
     width: min(100%, 30rem);
   }
 
-  .topo__horizonte {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: var(--altura-ondas);
-    height: 1px;
-    background: rgba(185, 204, 224, 0.35);
-  }
-
-  .topo :global(.topo__ondas) {
+  .topo__mar {
     position: absolute;
     left: 0;
     right: 0;
     bottom: 0;
     height: var(--altura-ondas);
+    border-top: 1px solid var(--linha);
+  }
+
+  .topo__mar :global(.topo__ondas) {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -1.5rem;
+    height: 3.5rem;
+    opacity: 0.8;
   }
 
   @media (max-width: 47.99rem) {

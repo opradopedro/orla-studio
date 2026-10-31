@@ -6,10 +6,12 @@ interface Props {
   tipo?: 'linhas' | 'divisor';
   cor?: string;
   invertida?: boolean;
+  // cor que aparece atrás da onda (a seção anterior)
+  fundo?: string;
   class?: string;
 }
 
-const { tipo = 'divisor', cor = 'var(--nevoa)', invertida = false, class: classe } = Astro.props;
+const { tipo = 'divisor', cor = 'var(--marca-claro)', invertida = false, fundo = 'transparent', class: classe } = Astro.props;
 
 // Um período da onda tem 1440 de largura e termina com a mesma inclinação com que começa,
 // então dá para repetir sem emenda.
@@ -33,7 +35,7 @@ const doisPeriodos = `${periodo} S1940 10 2200 58 S2680 104 2880 64`;
       viewBox="0 0 1440 120"
       preserveAspectRatio="none"
       aria-hidden="true"
-      style={`--cor-onda: ${cor}`}
+      style={`--cor-onda: ${cor}; background: ${fundo}`}
     >
       <path d={`${periodo} V120 H0 Z`} />
     </svg>
@@ -54,7 +56,7 @@ const doisPeriodos = `${periodo} S1940 10 2200 58 S2680 104 2880 64`;
     max-width: none;
     height: 70%;
     fill: none;
-    stroke: var(--azul-claro);
+    stroke: var(--acento);
   }
 
   .onda-linhas path {

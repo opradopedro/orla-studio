@@ -15,12 +15,11 @@ const clientes = [
   <div class="tela painel">
     <div class="tela__topo">
       <Icone nome="refresh-ccw" />
-      <span>Reativação de clientes</span>
+      <span>Reativação contínua</span>
     </div>
     <div class="campanha">
-      <span>Campanha de 30 dias</span>
-      <span>Dia 12</span>
-      <span class="campanha__barra"><span></span></span>
+      <span>Regra: sem visita há 90 dias</span>
+      <span>Ligada</span>
     </div>
     <ul class="clientes">
       {
@@ -46,7 +45,7 @@ const clientes = [
 
   .tela {
     overflow: hidden;
-    box-shadow: 0 30px 60px -30px rgba(2, 12, 26, 0.7);
+    box-shadow: 0 30px 60px -30px rgba(7, 36, 71, 0.21);
   }
 
   .tela__topo {
@@ -59,7 +58,7 @@ const clientes = [
   }
 
   .tela__topo .icone {
-    color: var(--azul-claro);
+    color: var(--acento);
   }
 
   .campanha {
@@ -67,11 +66,11 @@ const clientes = [
     grid-template-columns: 1fr auto;
     gap: 0.6rem;
     padding: 1rem 1.25rem 0.5rem;
-    color: var(--azul-claro);
+    color: var(--acento);
   }
 
   .campanha span:nth-child(2) {
-    color: var(--branco);
+    color: var(--tinta);
     font-weight: 700;
   }
 
@@ -79,7 +78,7 @@ const clientes = [
     grid-column: 1 / -1;
     height: 4px;
     border-radius: 4px;
-    background: rgba(185, 204, 224, 0.15);
+    background: color-mix(in srgb, var(--acento) 15%, transparent);
     overflow: hidden;
   }
 
@@ -87,7 +86,7 @@ const clientes = [
     display: block;
     height: 100%;
     width: calc(15% + var(--p, 0.5) * 50%);
-    background: var(--azul-claro);
+    background: var(--acento);
     border-radius: inherit;
   }
 
@@ -107,7 +106,7 @@ const clientes = [
   }
 
   .cliente + .cliente {
-    border-top: 1px solid rgba(185, 204, 224, 0.08);
+    border-top: 1px solid color-mix(in srgb, var(--acento) 8%, transparent);
   }
 
   .cliente__avatar {
@@ -119,7 +118,7 @@ const clientes = [
     border: 1px solid var(--borda-painel);
     font-size: 0.6875rem;
     font-weight: 700;
-    color: var(--azul-claro);
+    color: var(--acento);
   }
 
   .cliente__status {
@@ -127,7 +126,7 @@ const clientes = [
     align-items: center;
     gap: 0.35rem;
     font-size: 0.75rem;
-    color: var(--azul-claro);
+    color: var(--acento);
   }
 
   .cliente__status .icone {
@@ -136,8 +135,8 @@ const clientes = [
   }
 
   .cliente--marcado {
-    background: var(--azul-claro);
-    color: var(--marinho);
+    background: var(--acento);
+    color: var(--papel);
   }
 
   .cliente--marcado + .cliente {
@@ -145,18 +144,18 @@ const clientes = [
   }
 
   .cliente--marcado .cliente__avatar {
-    background: var(--marinho);
-    border-color: var(--marinho);
-    color: var(--branco);
+    background: var(--papel);
+    border-color: var(--papel);
+    color: var(--tinta);
   }
 
   .cliente--marcado .cliente__status {
-    color: var(--marinho);
+    color: var(--papel);
     font-weight: 700;
   }
 
   .cliente--conversa .cliente__status {
-    color: var(--branco);
+    color: var(--tinta);
   }
 
   .cliente--saiu {

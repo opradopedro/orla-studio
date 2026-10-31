@@ -178,8 +178,8 @@ import { contato, linkWhatsApp, site } from '../config';
   }
 
   a.canal:hover {
-    border-color: var(--azul-claro);
-    background: rgba(185, 204, 224, 0.05);
+    border-color: var(--acento);
+    background: color-mix(in srgb, var(--acento) 5%, transparent);
   }
 
   .canal .bloco {
@@ -189,35 +189,35 @@ import { contato, linkWhatsApp, site } from '../config';
 
   .canal__texto {
     display: block;
-    color: var(--azul-claro);
+    color: var(--acento);
     overflow-wrap: anywhere;
   }
 
   .canal :global(.canal__seta) {
-    color: var(--azul-claro);
+    color: var(--acento);
   }
 
   .canal--principal {
-    background: var(--branco);
-    border-color: var(--branco);
-    color: var(--marinho);
+    background: var(--tinta);
+    border-color: var(--tinta);
+    color: var(--papel);
   }
 
   .canal--principal .bloco strong,
   .canal--principal .canal__texto,
   .canal--principal :global(.canal__seta) {
-    color: var(--marinho);
+    color: var(--papel);
   }
 
   .canal--principal .selo-icone {
-    background: var(--marinho);
-    border-color: var(--marinho);
-    color: var(--branco);
+    background: var(--papel);
+    border-color: var(--papel);
+    color: var(--tinta);
   }
 
   a.canal--principal:hover {
-    background: var(--azul-claro);
-    border-color: var(--azul-claro);
+    background: var(--acento);
+    border-color: var(--acento);
   }
 
   .canal--local {
@@ -244,7 +244,7 @@ import { contato, linkWhatsApp, site } from '../config';
   }
 
   .campo label span {
-    color: var(--azul-claro);
+    color: var(--acento);
     font-weight: 400;
   }
 
@@ -252,27 +252,27 @@ import { contato, linkWhatsApp, site } from '../config';
   .campo textarea {
     width: 100%;
     padding: 0.85rem 1rem;
-    border: 1px solid rgba(185, 204, 224, 0.35);
+    border: 1px solid color-mix(in srgb, var(--acento) 35%, transparent);
     border-radius: var(--raio);
-    background: var(--marinho-fundo);
-    color: var(--branco);
+    background: var(--fundo-2);
+    color: var(--tinta);
     font: inherit;
     resize: vertical;
   }
 
   .campo input:focus-visible,
   .campo textarea:focus-visible {
-    outline: 2px solid var(--azul-claro);
+    outline: 2px solid var(--acento);
     outline-offset: 1px;
-    border-color: var(--azul-claro);
+    border-color: var(--acento);
   }
 
   .campo textarea::placeholder {
-    color: rgba(185, 204, 224, 0.75);
+    color: color-mix(in srgb, var(--acento) 75%, transparent);
   }
 
   .campo [aria-invalid='true'] {
-    border-color: var(--branco);
+    border-color: var(--tinta);
     border-width: 2px;
   }
 
@@ -282,7 +282,7 @@ import { contato, linkWhatsApp, site } from '../config';
     gap: 0.4rem;
     font-size: var(--t-pequeno);
     font-weight: 500;
-    color: var(--branco);
+    color: var(--tinta);
   }
 
   .campo__erro[hidden] {
@@ -296,8 +296,8 @@ import { contato, linkWhatsApp, site } from '../config';
     width: 1.1rem;
     height: 1.1rem;
     border-radius: 50%;
-    background: var(--branco);
-    color: var(--marinho);
+    background: var(--tinta);
+    color: var(--papel);
     font-size: 0.75rem;
     font-weight: 700;
   }

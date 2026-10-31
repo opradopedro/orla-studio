@@ -56,7 +56,7 @@ const horarios = [
 
   .tela {
     overflow: hidden;
-    box-shadow: 0 30px 60px -30px rgba(2, 12, 26, 0.7);
+    box-shadow: 0 30px 60px -30px rgba(7, 36, 71, 0.21);
   }
 
   .tela__topo {
@@ -69,7 +69,7 @@ const horarios = [
   }
 
   .tela__topo .icone {
-    color: var(--azul-claro);
+    color: var(--acento);
   }
 
   .tela__pilula {
@@ -84,7 +84,7 @@ const horarios = [
     font-weight: 500;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--azul-claro);
+    color: var(--acento);
   }
 
   .tela__pilula::before {
@@ -92,7 +92,7 @@ const horarios = [
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: var(--azul-claro);
+    background: var(--acento);
     animation: pulsar 2s ease-in-out infinite;
   }
 
@@ -118,12 +118,12 @@ const horarios = [
   }
 
   .agenda__linha + .agenda__linha {
-    border-top: 1px solid rgba(185, 204, 224, 0.08);
+    border-top: 1px solid color-mix(in srgb, var(--acento) 8%, transparent);
   }
 
   .agenda__hora {
     font-weight: 700;
-    color: var(--azul-claro);
+    color: var(--acento);
   }
 
   .agenda__servico {
@@ -134,7 +134,7 @@ const horarios = [
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
-    color: var(--azul-claro);
+    color: var(--acento);
     font-size: 0.75rem;
   }
 
@@ -144,13 +144,13 @@ const horarios = [
   }
 
   .agenda__linha--novo {
-    background: var(--azul-claro);
-    color: var(--marinho);
+    background: var(--acento);
+    color: var(--papel);
   }
 
   .agenda__linha--novo .agenda__hora,
   .agenda__linha--novo .agenda__status {
-    color: var(--marinho);
+    color: var(--papel);
   }
 
   .agenda__linha--novo + .agenda__linha {
@@ -158,7 +158,7 @@ const horarios = [
   }
 
   .agenda__linha--vago .agenda__servico {
-    color: var(--azul-claro);
+    color: var(--acento);
     font-weight: 400;
   }
 
@@ -172,8 +172,8 @@ const horarios = [
     gap: 0.75rem;
     width: min(18rem, 85%);
     padding: 0.9rem 1rem;
-    background: var(--marinho-painel-2);
-    box-shadow: 0 24px 48px -20px rgba(2, 12, 26, 0.8);
+    background: var(--painel-2);
+    box-shadow: 0 24px 48px -20px rgba(7, 36, 71, 0.24);
     transform: translateY(calc((0.5 - var(--p, 0.5)) * 40px));
   }
 
@@ -183,8 +183,8 @@ const horarios = [
     width: 2.25rem;
     height: 2.25rem;
     border-radius: 50%;
-    background: var(--branco);
-    color: var(--marinho);
+    background: var(--tinta);
+    color: var(--papel);
   }
 
   .aviso__icone .icone {
@@ -199,7 +199,7 @@ const horarios = [
   }
 
   .aviso__texto span {
-    color: var(--azul-claro);
+    color: var(--acento);
   }
 
   .aviso__botoes {
@@ -218,9 +218,9 @@ const horarios = [
   }
 
   .aviso__botoes span:first-child {
-    background: var(--branco);
-    border-color: var(--branco);
-    color: var(--marinho);
+    background: var(--tinta);
+    border-color: var(--tinta);
+    color: var(--papel);
   }
 
   @media (prefers-reduced-motion: reduce) {

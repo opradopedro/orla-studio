@@ -1,0 +1,18 @@
+---
+// Mar de pontos em canvas (desenhado por src/scripts/telas.ts).
+interface Props {
+  class?: string;
+  cor?: string;
+}
+const { class: classe, cor = '#244a6c' } = Astro.props;
+---
+
+<canvas class:list={['mar', classe]} data-mar aria-hidden="true" style={`--cor-pontos: ${cor}`}></canvas>
+
+<style>
+  .mar {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+</style>

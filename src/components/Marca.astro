@@ -3,14 +3,17 @@
 import { caminho } from '../config';
 interface Props {
   tamanho?: 'menu' | 'grande';
+  // true quando a marca fica sobre fundo azul escuro
+  sobreEscuro?: boolean;
 }
-const { tamanho = 'menu' } = Astro.props;
+const { tamanho = 'menu', sobreEscuro = false } = Astro.props;
+const cor = sobreEscuro ? 'branco' : 'marinho';
 ---
 
 <span class:list={['marca', `marca--${tamanho}`]}>
   <img
     class="marca__emblema"
-    src={caminho(tamanho === 'grande' ? '/marca/emblema-branco-240.webp' : '/marca/emblema-branco-96.webp')}
+    src={caminho(tamanho === 'grande' ? `/marca/emblema-${cor}-240.webp` : `/marca/emblema-${cor}-96.webp`)}
     alt=""
     width="92"
     height="96"
@@ -27,7 +30,7 @@ const { tamanho = 'menu' } = Astro.props;
     display: inline-flex;
     align-items: center;
     gap: 0.75rem;
-    color: var(--branco);
+    color: var(--tinta);
     text-transform: uppercase;
     line-height: 1;
   }

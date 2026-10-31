@@ -34,28 +34,28 @@ const conversa: Mensagem[] = [
 
 const etapas = [
   {
-    quando: 'Primeira semana',
+    quando: 'Antes do primeiro envio',
     icone: 'file-spreadsheet',
     titulo: 'Organização da lista',
     texto:
       'A gente separa quem pode receber mensagem, por tempo sem vir e por tipo de serviço. Lista bagunçada não é problema: arrumar faz parte do trabalho.',
   },
   {
-    quando: 'Primeira semana',
+    quando: 'Antes do primeiro envio',
     icone: 'pen-line',
     titulo: 'Mensagem aprovada por você',
     texto:
       'Você aprova o texto da primeira mensagem antes de qualquer envio. Educada, com o nome da pessoa e com opção clara de não receber mais.',
   },
   {
-    quando: 'Da segunda à quarta semana',
+    quando: 'Durante a campanha',
     icone: 'messages-square',
     titulo: 'Conversas e agendamentos',
     texto:
       'As mensagens saem aos poucos pelo WhatsApp oficial. A IA responde as dúvidas e marca o horário direto na sua agenda.',
   },
   {
-    quando: 'Fim dos 30 dias',
+    quando: 'No fim de cada rodada',
     icone: 'chart-line',
     titulo: 'Resultado na mesa',
     texto:
@@ -89,23 +89,23 @@ const perguntas = [
       'Serve. A conversa muda: em vez de lembrar da última visita, ela retoma o orçamento e tira as dúvidas que ficaram.',
   },
   {
-    pergunta: 'E depois dos 30 dias?',
-    resposta: 'Você vê o resultado e decide se quer repetir mais para frente, com quem ainda não voltou.',
+    pergunta: 'Qual a diferença entre a express e a contínua?',
+    resposta:
+      'A express é uma campanha única, boa para trabalhar uma lista parada de uma vez. A contínua fica ligada e chama quem passa um tempo sem aparecer, 90 dias por padrão, na frequência que você escolher.',
   },
 ];
 ---
 
 <Base
   titulo="Reativação de clientes pelo WhatsApp"
-  descricao="Campanha de 30 dias em que a IA conversa pelo WhatsApp oficial com clientes que sumiram, tira dúvidas e marca o retorno direto na sua agenda. Sem anúncio e sem disparo em massa."
+  descricao="Reativação express ou contínua: a IA conversa pelo WhatsApp oficial com clientes que sumiram, tira dúvidas e marca o retorno direto na sua agenda. Sem anúncio e sem disparo em massa."
 >
   <TopoPagina
     rotulo="Reativação de clientes"
     titulo="Aquela lista de pacientes que não voltam desde o ano passado."
   >
     <p>
-      Em 30 dias, a IA conversa pelo WhatsApp oficial com quem sumiu, tira dúvidas e marca o retorno direto na sua
-      agenda. Sem gastar com anúncio: a gente trabalha a lista que você já tem.
+      A IA conversa pelo WhatsApp oficial com quem sumiu, tira dúvidas e marca o retorno direto na sua agenda. Sem gastar com anúncio: a gente trabalha a lista que você já tem.
     </p>
     <Fragment slot="botoes">
       <a
@@ -117,7 +117,7 @@ const perguntas = [
         <Icone nome="message-circle" />
         Quero reativar meus clientes
       </a>
-      <a class="botao botao--contorno" href="#campanha">Ver a campanha</a>
+      <a class="botao botao--contorno" href="#campanha">Ver como funciona</a>
     </Fragment>
     <Conversa slot="visual" contato="Sua clínica" mensagens={conversa} legenda="Exemplo de conversa de reativação" />
   </TopoPagina>
@@ -139,17 +139,58 @@ const perguntas = [
     </div>
   </section>
 
+  <section class="secao jeitos" aria-labelledby="jeitos-titulo">
+    <div class="conteiner">
+      <div class="cabeca-secao cabeca-secao--lado">
+        <h2 id="jeitos-titulo">Dois jeitos de reativar</h2>
+        <p class="apoio">Uma rodada rápida para a lista que está parada, ou uma reativação que fica sempre ligada.</p>
+      </div>
+      <div class="jeitos__grade">
+        <article class="jeito painel" data-revelar>
+          <span class="selo-icone"><Icone nome="zap" /></span>
+          <div class="bloco">
+            <h3>Reativação express</h3>
+            <p>
+              Uma campanha única, montada uma vez. Você manda a lista, a gente prepara a mensagem e coloca para rodar.
+              Rápido, como abrir um chamado.
+            </p>
+          </div>
+          <ul class="jeito__itens">
+            <li><Icone nome="check" />Boa para uma lista parada há tempo</li>
+            <li><Icone nome="check" />Você aprova a mensagem antes do envio</li>
+            <li><Icone nome="check" />Resultado no fim da rodada</li>
+          </ul>
+        </article>
+        <article class="jeito jeito--continua painel escuro" data-revelar>
+          <span class="selo-icone"><Icone nome="refresh-ccw" /></span>
+          <div class="bloco">
+            <h3>Reativação contínua</h3>
+            <p>
+              Fica ligada o tempo todo. Quando um cliente passa 90 dias sem aparecer, a IA puxa a conversa sozinha. O
+              prazo e a frequência das mensagens você que define.
+            </p>
+          </div>
+          <ul class="jeito__itens">
+            <li><Icone nome="check" />90 dias sem visita por padrão, ajustável</li>
+            <li><Icone nome="check" />Frequência do seu jeito</li>
+            <li><Icone nome="check" />Quem volta já cai na agenda</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
   <section class="secao campanha" id="campanha" aria-labelledby="campanha-titulo">
     <div class="conteiner campanha__grade">
       <div class="campanha__cabeca">
-        <h2 id="campanha-titulo">Como funciona a campanha de 30 dias</h2>
+        <h2 id="campanha-titulo">Como funciona</h2>
         <p class="apoio">Do arquivo com a lista até o cliente com horário marcado.</p>
       </div>
       <LinhaTempo etapas={etapas} />
     </div>
   </section>
 
-  <Onda cor="var(--nevoa)" />
+  <Onda cor="var(--marca-claro)" />
   <section class="secao claro" aria-labelledby="precisamos-titulo">
     <div class="conteiner">
       <div class="cabeca-secao cabeca-secao--lado">
@@ -181,7 +222,7 @@ const perguntas = [
       </ul>
     </div>
   </section>
-  <Onda cor="var(--nevoa)" invertida />
+  <Onda cor="var(--marca-claro)" invertida />
 
   <section class="secao" aria-labelledby="cuidados-titulo">
     <div class="conteiner">
@@ -224,7 +265,7 @@ const perguntas = [
 
   <section class="ligacao" aria-labelledby="ligacao-titulo">
     <div class="conteiner">
-      <div class="ligacao__caixa painel grade-tecnica">
+      <div class="ligacao__caixa painel">
         <span class="selo-icone ligacao__selo"><Icone nome="calendar-sync" /></span>
         <div class="bloco">
           <h2 id="ligacao-titulo">Funciona sozinha ou junto com a Secretária IA</h2>
@@ -267,7 +308,41 @@ const perguntas = [
   }
 
   .dor__texto p {
-    color: var(--azul-claro);
+    color: var(--acento);
+  }
+
+  .jeitos {
+    padding-top: 0;
+  }
+
+  .jeitos__grade {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .jeito {
+    display: grid;
+    gap: 1.5rem;
+    align-content: start;
+    padding: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+  }
+
+  .jeito__itens {
+    list-style: none;
+    padding: 1.25rem 0 0;
+    display: grid;
+    gap: 0.6rem;
+    border-top: 1px solid var(--linha);
+  }
+
+  .jeito__itens li {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .jeito__itens :global(.icone) {
+    margin-top: 0.2rem;
+    color: var(--acento);
   }
 
   .campanha__cabeca {
@@ -287,9 +362,9 @@ const perguntas = [
     display: flex;
     gap: 1.25rem;
     padding: 1.75rem;
-    border: 1px solid var(--linha-clara);
+    border: 1px solid var(--linha);
     border-radius: var(--raio-painel);
-    background: var(--branco);
+    background: var(--painel);
   }
 
   .ligacao {
@@ -307,9 +382,9 @@ const perguntas = [
   .ligacao__selo {
     width: 3.5rem;
     height: 3.5rem;
-    background: var(--branco);
-    border-color: var(--branco);
-    color: var(--marinho);
+    background: var(--tinta);
+    border-color: var(--tinta);
+    color: var(--papel);
   }
 
   .ligacao h2 {
@@ -338,6 +413,10 @@ const perguntas = [
 
     .precisa {
       grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .jeitos__grade {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .precisa li {

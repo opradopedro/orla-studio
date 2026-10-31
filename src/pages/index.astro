@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import Conversa, { type Mensagem } from '../components/Conversa.astro';
 import Onda from '../components/Onda.astro';
 import Icone from '../components/Icone.astro';
-import Aneis from '../components/Aneis.astro';
+import Mar from '../components/Mar.astro';
 import VisualAgenda from '../components/VisualAgenda.astro';
 import VisualReativacao from '../components/VisualReativacao.astro';
 import VisualSistema from '../components/VisualSistema.astro';
@@ -45,6 +45,12 @@ const conversa: Mensagem[] = [
     hora: '23:16',
     texto: 'Se acontecer algum imprevisto, é só mandar mensagem aqui até 24h antes que a gente remarca.',
   },
+  {
+    de: 'empresa',
+    hora: '23:16',
+    texto: 'Aqui está o endereço. Até terça!',
+    local: { titulo: 'Como chegar', endereco: 'Av. da Orla, 100, Praia Grande' },
+  },
 ];
 
 const funcoes = [
@@ -52,7 +58,8 @@ const funcoes = [
   { icone: 'calendar-check', texto: 'Marca e remarca' },
   { icone: 'calendar-clock', texto: 'Deixa pré-agendado' },
   { icone: 'list-restart', texto: 'Lista de espera' },
-  { icone: 'bell-ring', texto: 'Lembra 2 dias antes e no dia' },
+  { icone: 'bell-ring', texto: 'Lembretes antes do horário' },
+  { icone: 'map-pin', texto: 'Manda o endereço' },
 ];
 
 const servicos = [
@@ -64,7 +71,7 @@ const servicos = [
     itens: [
       'Responde dúvidas com as informações do seu negócio',
       'Marca, remarca e cancela direto na agenda',
-      'Lembra o cliente 2 dias antes e no dia do horário',
+      'Lembretes antes do horário, quantos você quiser',
     ],
     href: '/secretaria-ia',
     link: 'Conhecer a Secretária IA',
@@ -75,7 +82,7 @@ const servicos = [
     texto:
       'Quem não volta desde o ano passado recebe uma mensagem educada e marca o retorno ali mesmo. Sem gastar com anúncio: a campanha usa a lista que você já tem.',
     itens: [
-      'Campanha de 30 dias pelo WhatsApp oficial',
+      'Uma campanha rápida ou rodando o ano todo',
       'Só para quem já é seu cliente, com opção de sair',
       'Quem volta já cai na agenda com lembrete',
     ],
@@ -125,7 +132,7 @@ const passos = [
   descricao="Estúdio de tecnologia em Praia Grande (SP). A Secretária IA atende o WhatsApp da sua clínica 24 horas, marca na agenda e confirma o paciente. Também fazemos reativação de clientes, sites e sistemas."
 >
   <!-- Hero -->
-  <section class="hero amanhecer grade-tecnica" aria-labelledby="hero-titulo" data-progresso>
+  <section class="hero amanhecer" aria-labelledby="hero-titulo" data-progresso>
     <div class="conteiner hero__grade">
       <div class="hero__texto">
         <p class="rotulo">Praia Grande, SP</p>
@@ -161,27 +168,34 @@ const passos = [
         />
       </div>
     </div>
-    <div class="hero__horizonte" aria-hidden="true"></div>
-    <Onda tipo="linhas" class="hero__ondas" />
+    <div class="hero__mar" aria-hidden="true">
+      <Mar />
+      <Onda tipo="linhas" class="hero__ondas" />
+    </div>
   </section>
 
   <!-- Destaque: tudo o que aparece na conversa vai direto para a agenda -->
   <section class="conectado" aria-labelledby="conectado-titulo">
-    <div class="conteiner conectado__grade">
-      <div class="conectado__titulo">
-        <span class="selo-icone conectado__selo"><Icone nome="calendar-sync" /></span>
-        <h2 id="conectado-titulo">Tudo isso conectado com a sua agenda.</h2>
+    <div class="conteiner">
+      <div class="conectado__caixa escuro">
+        <div class="conectado__titulo">
+          <span class="conectado__selo"><Icone nome="calendar-sync" /></span>
+          <h2 id="conectado-titulo">Tudo isso conectado com a sua agenda.</h2>
+        </div>
+        <ul class="conectado__funcoes">
+          {
+            funcoes.map((funcao) => (
+              <li>
+                <Icone nome={funcao.icone} />
+                {funcao.texto}
+              </li>
+            ))
+          }
+          <li class="conectado__mais">
+            <Icone nome="plus" />E mais o que você precisar
+          </li>
+        </ul>
       </div>
-      <ul class="conectado__funcoes">
-        {
-          funcoes.map((funcao) => (
-            <li>
-              <Icone nome={funcao.icone} />
-              {funcao.texto}
-            </li>
-          ))
-        }
-      </ul>
     </div>
   </section>
 
@@ -198,7 +212,9 @@ const passos = [
 
       <div class="servicos__grade">
         <div class="servicos__palco" data-progresso aria-hidden="true">
-          <Aneis class="servicos__aneis" />
+          <div class="servicos__fundo">
+            <Mar />
+          </div>
           <div class="servicos__tela" data-indice="0"><VisualAgenda /></div>
           <div class="servicos__tela" data-indice="1"><VisualReativacao /></div>
           <div class="servicos__tela" data-indice="2"><VisualSistema /></div>
@@ -242,7 +258,8 @@ const passos = [
   </section>
 
   <!-- Como trabalhamos: no computador, os passos andam para o lado com a rolagem -->
-  <section class="processo" aria-labelledby="processo-titulo" data-horizontal>
+  <Onda cor="var(--marca-claro)" />
+  <section class="processo claro" aria-labelledby="processo-titulo" data-horizontal>
     <div class="processo__fixo">
       <div class="conteiner">
         <div class="cabeca-secao cabeca-secao--lado processo__cabeca">
@@ -279,16 +296,16 @@ const passos = [
   </section>
 
   <!-- Quem somos -->
-  <Onda cor="var(--nevoa)" />
-  <section class="secao claro quem" aria-labelledby="quem-titulo" data-progresso>
-    <Aneis class="quem__aneis" claro />
+  <Onda cor="var(--marca-claro)" invertida />
+
+  <section class="secao quem" aria-labelledby="quem-titulo">
     <div class="conteiner quem__grade">
       <div class="quem__texto">
         <h2 id="quem-titulo">Quem atende você é quem constrói.</h2>
         <!-- TODO: se quiserem, colocar aqui uma foto real de vocês (sem foto de banco de imagens). -->
         <p>
-          A Orla é um estúdio pequeno. Quem entende o seu problema é quem constrói a solução e continua do
-          seu lado depois que tudo está no ar.
+          Na Orla, você tem contato direto com quem monta o seu sistema. Quem entende o seu problema é quem
+          constrói a solução e continua do seu lado depois que tudo está no ar.
         </p>
         <p>
           Você não fala com central nem com um vendedor que some depois do contrato. Fala direto com quem fez,
@@ -322,8 +339,6 @@ const passos = [
       </ul>
     </div>
   </section>
-  <Onda cor="var(--nevoa)" invertida />
-
   <ChamadaFinal />
 </Base>
 
@@ -348,7 +363,7 @@ const passos = [
 <style>
   /* Hero: o texto fica acima da linha do horizonte e o celular se apoia nela. */
   .hero {
-    --altura-ondas: clamp(4.5rem, 3rem + 5vw, 7.5rem);
+    --altura-ondas: clamp(8rem, 5rem + 9vw, 13rem);
     position: relative;
     padding-top: clamp(3rem, 2rem + 5vw, 6.5rem);
     padding-bottom: var(--altura-ondas);
@@ -403,21 +418,22 @@ const passos = [
     display: none;
   }
 
-  .hero__horizonte {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: var(--altura-ondas);
-    height: 1px;
-    background: rgba(185, 204, 224, 0.35);
-  }
-
-  .hero :global(.hero__ondas) {
+  .hero__mar {
     position: absolute;
     left: 0;
     right: 0;
     bottom: 0;
     height: var(--altura-ondas);
+    border-top: 1px solid var(--linha);
+  }
+
+  .hero__mar :global(.hero__ondas) {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -1.5rem;
+    height: 3.5rem;
+    opacity: 0.8;
   }
 
   .hero :global(.conversa__legenda) {
@@ -426,6 +442,9 @@ const passos = [
     right: 0;
     top: 100%;
     margin-top: 0.85rem;
+    padding: 0.5rem 0.9rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.92);
   }
 
   @media (max-width: 47.99rem) {
@@ -462,11 +481,11 @@ const passos = [
       align-items: center;
       gap: 0.75rem;
       padding: 0.8rem 1.1rem 0.8rem 0.8rem;
-      background: var(--marinho-painel-2);
+      background: var(--painel-2);
       font-size: 0.8125rem;
       line-height: 1.35;
       white-space: nowrap;
-      box-shadow: 0 24px 48px -20px rgba(2, 12, 26, 0.8);
+      box-shadow: 0 24px 48px -20px rgba(7, 36, 71, 0.24);
     }
 
     .hero__cartao strong {
@@ -474,7 +493,7 @@ const passos = [
     }
 
     .hero__cartao span span {
-      color: var(--azul-claro);
+      color: var(--acento);
     }
 
     .hero__cartao-icone {
@@ -483,8 +502,8 @@ const passos = [
       width: 2.25rem;
       height: 2.25rem;
       border-radius: 50%;
-      background: var(--branco);
-      color: var(--marinho);
+      background: var(--tinta);
+      color: var(--papel);
     }
 
     .hero__cartao-icone :global(.icone) {
@@ -505,30 +524,32 @@ const passos = [
     }
   }
 
-  /* Destaque da agenda */
+  /* Destaque da agenda: cartão azul escuro com as funções em blocos */
   .conectado {
-    padding-block: clamp(3rem, 2rem + 3vw, 4.5rem);
-    background: var(--marinho-fundo);
-    border-bottom: 1px solid var(--linha);
+    padding-top: clamp(3rem, 2rem + 3vw, 5rem);
   }
 
-  .conectado__grade {
+  .conectado__caixa {
     display: grid;
     gap: 2rem;
+    padding: clamp(1.5rem, 1rem + 3vw, 3rem);
+    border-radius: calc(var(--raio-painel) + 8px);
   }
 
   .conectado__titulo {
-    display: flex;
-    align-items: center;
+    display: grid;
     gap: 1.25rem;
+    justify-items: start;
   }
 
   .conectado__selo {
+    display: grid;
+    place-items: center;
     width: 3.5rem;
     height: 3.5rem;
-    background: var(--branco);
-    border-color: var(--branco);
-    color: var(--marinho);
+    border-radius: 14px;
+    background: var(--tinta);
+    color: var(--papel);
   }
 
   .conectado__selo :global(.icone) {
@@ -537,52 +558,63 @@ const passos = [
   }
 
   .conectado h2 {
-    font-size: clamp(1.5rem, 1.1rem + 1.8vw, 2.25rem);
-    max-width: 14em;
+    font-size: clamp(1.625rem, 1.2rem + 1.8vw, 2.5rem);
+    max-width: 12em;
   }
 
   .conectado__funcoes {
     list-style: none;
     padding: 0;
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.6rem;
   }
 
   .conectado__funcoes li {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.55rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1rem;
     border: 1px solid var(--borda-painel);
-    border-radius: 999px;
-    background: var(--marinho-painel);
+    border-radius: 14px;
+    background: var(--painel);
     font-size: var(--t-pequeno);
     font-weight: 500;
+    line-height: 1.35;
   }
 
   .conectado__funcoes :global(.icone) {
-    width: 1.05rem;
-    height: 1.05rem;
-    color: var(--azul-claro);
+    color: var(--acento);
+  }
+
+  .conectado__funcoes .conectado__mais {
+    background: var(--tinta);
+    border-color: var(--tinta);
+    color: var(--papel);
+  }
+
+  .conectado__mais :global(.icone) {
+    color: var(--papel);
+  }
+
+  @media (min-width: 48rem) {
+    .conectado__funcoes {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
   }
 
   @media (min-width: 68rem) {
-    .conectado__grade {
-      grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    .conectado__caixa {
+      grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
       align-items: center;
       gap: 3rem;
-    }
-
-    .conectado__funcoes {
-      justify-content: flex-end;
     }
   }
 
   /* Serviços */
   .servicos__lista {
     display: grid;
-    gap: 4.5rem;
+    gap: 0;
   }
 
   .servicos__palco {
@@ -593,6 +625,16 @@ const passos = [
     display: grid;
     gap: 1.5rem;
     justify-items: start;
+    padding-block: 3rem;
+  }
+
+  /* No celular, uma linha separa um serviço do outro */
+  .servico + .servico {
+    border-top: 1px solid var(--linha);
+  }
+
+  .servico:first-child {
+    padding-top: 0;
   }
 
   .servico__visual {
@@ -613,7 +655,7 @@ const passos = [
   .servico__corpo {
     display: grid;
     gap: 1.25rem;
-    color: var(--azul-claro);
+    color: var(--acento);
     max-width: 34em;
   }
 
@@ -622,7 +664,7 @@ const passos = [
     padding: 0;
     display: grid;
     gap: 0.6rem;
-    color: var(--branco);
+    color: var(--tinta);
   }
 
   .servico__itens li {
@@ -633,7 +675,7 @@ const passos = [
 
   .servico__itens :global(.icone) {
     margin-top: 0.2rem;
-    color: var(--azul-claro);
+    color: var(--acento);
   }
 
   @media (min-width: 60rem) {
@@ -653,17 +695,27 @@ const passos = [
       max-height: 40rem;
     }
 
-    .servicos__palco > :global(.servicos__aneis) {
+    /* Fundo do palco: um painel azul claro com o mar de pontos embaixo */
+    .servicos__fundo {
       position: absolute;
-      width: 100%;
-      max-width: 36rem;
+      inset: 0;
+      border-radius: calc(var(--raio-painel) + 8px);
+      background: var(--marca-claro);
+      overflow: hidden;
+    }
+
+    .servicos__fundo :global(.mar) {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 45%;
     }
 
     .servicos__tela {
       position: relative;
       z-index: 1;
       grid-area: 1 / 1;
-      width: min(100%, 30rem);
+      width: min(86%, 30rem);
       opacity: 0;
       transform: translateY(24px) scale(0.97);
       transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
@@ -685,6 +737,10 @@ const passos = [
       min-height: 80vh;
       align-content: center;
       padding-block: 3rem;
+    }
+
+    .servico + .servico {
+      border-top: 0;
     }
 
     .servico__visual {
@@ -723,8 +779,7 @@ const passos = [
     font-weight: 700;
     line-height: 1;
     letter-spacing: 0.02em;
-    color: transparent;
-    -webkit-text-stroke: 1px var(--azul-claro);
+    color: var(--tinta);
   }
 
   .processo__progresso {
@@ -787,26 +842,16 @@ const passos = [
     .processo__progresso span {
       display: block;
       height: 1px;
-      background: var(--azul-claro);
+      background: var(--acento);
       transform-origin: left;
       transform: scaleX(var(--p, 0));
     }
   }
 
-  /* Quem somos: a seção clara no meio do marinho. */
+  /* Quem somos */
   .quem {
     position: relative;
     overflow: hidden;
-  }
-
-  .quem > :global(.quem__aneis) {
-    display: none;
-    position: absolute;
-    right: -12rem;
-    top: 50%;
-    width: 34rem;
-    translate: 0 -50%;
-    opacity: 0.35;
   }
 
   .quem__grade {
@@ -827,7 +872,7 @@ const passos = [
   }
 
   .quem__texto p {
-    color: var(--azul-tinta);
+    color: var(--acento);
   }
 
   .quem__texto .botao {
@@ -845,15 +890,10 @@ const passos = [
       align-items: center;
     }
 
-    .quem > :global(.quem__aneis) {
-      display: block;
-    }
-
     .quem__lista {
       padding: 0.5rem 2rem;
       border-radius: var(--raio-painel);
-      background: rgba(255, 255, 255, 0.7);
-      border: 1px solid var(--linha-clara);
+      background: var(--marca-claro);
     }
   }
 </style>
