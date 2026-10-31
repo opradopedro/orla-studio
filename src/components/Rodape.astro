@@ -1,0 +1,116 @@
+---
+import Marca from './Marca.astro';
+import { contato, linkWhatsApp, site } from '../config';
+
+const ano = new Date().getFullYear();
+---
+
+<footer class="rodape">
+  <div class="conteiner rodape__grade">
+    <div class="rodape__sobre">
+      <a href="/" class="rodape__marca" aria-label="Orla Studio, página inicial">
+        <Marca />
+      </a>
+      <p>
+        Estúdio de tecnologia em {site.cidade}, {site.estado}. Atendemos clínicas e pequenos negócios
+        da Baixada Santista e de todo o Brasil.
+      </p>
+    </div>
+
+    <nav aria-label="Páginas do site">
+      <h2 class="rodape__titulo">Páginas</h2>
+      <ul>
+        <li><a href="/secretaria-ia">Secretária IA</a></li>
+        <li><a href="/reativacao-de-clientes">Reativação de clientes</a></li>
+        <li><a href="/sites-e-sistemas">Sites e sistemas</a></li>
+        <li><a href="/sobre">Sobre</a></li>
+        <li><a href="/contato">Contato</a></li>
+      </ul>
+    </nav>
+
+    <div>
+      <h2 class="rodape__titulo">Contato</h2>
+      <ul>
+        <li><a href={linkWhatsApp()} target="_blank" rel="noopener">WhatsApp {contato.telefoneExibicao}</a></li>
+        <li><a href={`mailto:${contato.email}`}>{contato.email}</a></li>
+        <li><a href={contato.instagram} target="_blank" rel="noopener">Instagram {contato.instagramUsuario}</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="conteiner rodape__base">
+    <p>© {ano} {site.nome}</p>
+    <p>Feito em {site.cidade}</p>
+  </div>
+</footer>
+
+<style>
+  .rodape {
+    background: var(--marinho-fundo);
+    color: var(--azul-claro);
+    font-size: var(--t-pequeno);
+    padding-top: clamp(3.5rem, 2.5rem + 4vw, 5.5rem);
+  }
+
+  .rodape__grade {
+    display: grid;
+    gap: 2.5rem;
+  }
+
+  .rodape__marca {
+    display: inline-block;
+    margin-bottom: 1.25rem;
+    text-decoration: none;
+  }
+
+  .rodape__sobre p {
+    max-width: 30em;
+  }
+
+  .rodape__titulo {
+    margin-bottom: 1rem;
+    font-size: var(--t-rotulo);
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--branco);
+  }
+
+  .rodape ul {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .rodape ul a {
+    display: inline-block;
+    padding-block: 0.2rem;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+
+  .rodape ul a:hover {
+    color: var(--branco);
+    text-decoration: underline;
+    text-underline-offset: 0.3em;
+  }
+
+  .rodape__base {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem 2rem;
+    margin-top: 3.5rem;
+    padding-block: 1.5rem 2rem;
+    border-top: 1px solid var(--linha);
+    font-size: 0.8125rem;
+  }
+
+  @media (min-width: 48rem) {
+    .rodape__grade {
+      grid-template-columns: 2fr 1fr 1.2fr;
+      gap: 3rem;
+    }
+  }
+</style>

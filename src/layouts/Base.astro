@@ -1,0 +1,106 @@
+---
+import '../styles/global.css';
+import Cabecalho from '../components/Cabecalho.astro';
+import Rodape from '../components/Rodape.astro';
+import { contato, site } from '../config';
+
+interface Props {
+  titulo: string;
+  descricao: string;
+  imagem?: string;
+}
+
+const { titulo, descricao, imagem = '/og.png' } = Astro.props;
+const base = Astro.site ?? new URL(site.dominio.toLowerCase());
+const canonico = new URL(Astro.url.pathname, base).href;
+const imagemAbsoluta = new URL(imagem, base).href;
+const tituloCompleto = Astro.url.pathname === '/' ? titulo : `${titulo} | ${site.nome}`;
+
+const dadosEstruturados = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: site.nome,
+  description:
+    'Estúdio de tecnologia em Praia Grande (SP). Secretária IA para WhatsApp, reativação de clientes, sites e sistemas para pequenos negócios e clínicas.',
+  url: base.href,
+  logo: new URL('/marca/icone-512.png', base).href,
+  image: imagemAbsoluta,
+  telephone: `+${contato.whatsapp}`,
+  email: contato.email,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: site.cidade,
+    addressRegion: site.estado,
+    addressCountry: 'BR',
+  },
+  areaServed: [
+    { '@type': 'City', name: 'Praia Grande' },
+    { '@type': 'AdministrativeArea', name: 'Baixada Santista' },
+    { '@type': 'Country', name: 'Brasil' },
+  ],
+  sameAs: [contato.instagram],
+};
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{tituloCompleto}</title>
+    <meta name="description" content={descricao} />
+    <link rel="canonical" href={canonico} />
+    <meta name="theme-color" content="#072447" />
+
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <link rel="preload" href="/fonts/montserrat-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/montserrat-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content={site.nome} />
+    <meta property="og:title" content={tituloCompleto} />
+    <meta property="og:description" content={descricao} />
+    <meta property="og:url" content={canonico} />
+    <meta property="og:image" content={imagemAbsoluta} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Emblema da Orla Studio sobre fundo azul marinho" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(dadosEstruturados)} />
+    <script is:inline>document.documentElement.classList.add('js');</script>
+  </head>
+  <body>
+    <a class="pular" href="#conteudo">Pular para o conteúdo</a>
+    <Cabecalho />
+    <main id="conteudo">
+      <slot />
+    </main>
+    <Rodape />
+
+    <script>
+      // Entrada suave dos blocos marcados com data-revelar
+      const alvos = document.querySelectorAll<HTMLElement>('[data-revelar]');
+      if ('IntersectionObserver' in window && alvos.length) {
+        const observador = new IntersectionObserver(
+          (entradas) => {
+            for (const entrada of entradas) {
+              if (entrada.isIntersecting) {
+                entrada.target.classList.add('visivel');
+                observador.unobserve(entrada.target);
+              }
+            }
+          },
+          { rootMargin: '0px 0px -10% 0px', threshold: 0.15 },
+        );
+        alvos.forEach((alvo) => observador.observe(alvo));
+      } else {
+        alvos.forEach((alvo) => alvo.classList.add('visivel'));
+      }
+    </script>
+  </body>
+</html>

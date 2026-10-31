@@ -1,0 +1,267 @@
+---
+import Marca from './Marca.astro';
+import IconeWhatsApp from './IconeWhatsApp.astro';
+import { linkWhatsApp } from '../config';
+
+const paginas = [
+  { href: '/secretaria-ia', nome: 'Secretária IA' },
+  { href: '/reativacao-de-clientes', nome: 'Reativação de clientes' },
+  { href: '/sites-e-sistemas', nome: 'Sites e sistemas' },
+  { href: '/sobre', nome: 'Sobre' },
+  { href: '/contato', nome: 'Contato' },
+];
+
+const atual = Astro.url.pathname.replace(/\/$/, '') || '/';
+---
+
+<header class="cabecalho">
+  <div class="conteiner cabecalho__barra">
+    <a href="/" class="cabecalho__marca" aria-label="Orla Studio, página inicial">
+      <Marca />
+    </a>
+
+    <nav class="cabecalho__nav" aria-label="Principal">
+      <ul id="menu-paginas" class="cabecalho__lista">
+        {
+          paginas.map((pagina) => (
+            <li>
+              <a href={pagina.href} aria-current={atual === pagina.href ? 'page' : undefined}>
+                {pagina.nome}
+              </a>
+            </li>
+          ))
+        }
+        <li class="cabecalho__whats-menu">
+          <a class="botao" href={linkWhatsApp()} target="_blank" rel="noopener">
+            <IconeWhatsApp />
+            Falar no WhatsApp
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="cabecalho__acoes">
+      <a class="botao cabecalho__whats" href={linkWhatsApp()} target="_blank" rel="noopener">
+        <IconeWhatsApp />
+        <span><span class="cabecalho__falar">Falar no </span>WhatsApp</span>
+      </a>
+      <button
+        class="cabecalho__botao-menu"
+        type="button"
+        aria-expanded="false"
+        aria-controls="menu-paginas"
+      >
+        <span class="sr-only">Abrir menu</span>
+        <span class="cabecalho__tracos" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<style>
+  .cabecalho {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--marinho);
+    border-bottom: 1px solid var(--linha);
+  }
+
+  .cabecalho__barra {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    height: var(--altura-menu);
+  }
+
+  .cabecalho__marca {
+    text-decoration: none;
+    flex: none;
+  }
+
+  .cabecalho__acoes {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .cabecalho__whats {
+    min-height: 2.75rem;
+    padding: 0.6rem 1rem;
+    font-size: 0.75rem;
+  }
+
+  /* No celular, "Falar no" some da tela mas continua para leitores de tela */
+  .cabecalho__falar {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+
+  .cabecalho__botao-menu {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    padding: 0;
+    border: 1px solid var(--linha);
+    border-radius: var(--raio);
+    background: transparent;
+    color: var(--branco);
+    cursor: pointer;
+  }
+
+  .cabecalho__tracos,
+  .cabecalho__tracos::before {
+    display: block;
+    width: 1.1rem;
+    height: 1px;
+    background: currentColor;
+    transition: transform 0.25s ease;
+  }
+
+  .cabecalho__tracos {
+    position: relative;
+    transform: translateY(-3px);
+  }
+
+  .cabecalho__tracos::before {
+    content: '';
+    position: absolute;
+    top: 6px;
+  }
+
+  [aria-expanded='true'] .cabecalho__tracos {
+    transform: translateY(0) rotate(45deg);
+  }
+
+  [aria-expanded='true'] .cabecalho__tracos::before {
+    transform: translateY(-6px) rotate(-90deg);
+  }
+
+  /* Menu do celular */
+  .cabecalho__lista {
+    display: none;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .cabecalho__lista.aberto {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    inset: var(--altura-menu) 0 auto 0;
+    height: calc(100dvh - var(--altura-menu));
+    overflow-y: auto;
+    padding: 1rem var(--margem) 2rem;
+    background: var(--marinho);
+    border-bottom: 1px solid var(--linha);
+  }
+
+  .cabecalho__lista a:not(.botao) {
+    display: block;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--linha);
+    font-size: 1.25rem;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .cabecalho__lista a[aria-current='page'] {
+    color: var(--azul-claro);
+  }
+
+  .cabecalho__whats-menu {
+    margin-top: 1.5rem;
+  }
+
+  .cabecalho__whats-menu .botao {
+    width: 100%;
+  }
+
+  @media (min-width: 30rem) {
+    .cabecalho__falar {
+      position: static;
+      width: auto;
+      height: auto;
+      overflow: visible;
+      clip: auto;
+      white-space: pre;
+    }
+  }
+
+  @media (min-width: 68rem) {
+    .cabecalho__botao-menu,
+    .cabecalho__whats-menu {
+      display: none;
+    }
+
+    .cabecalho__lista,
+    .cabecalho__lista.aberto {
+      position: static;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 2rem;
+      padding: 0;
+      border: 0;
+      height: auto;
+      overflow: visible;
+    }
+
+    .cabecalho__lista a:not(.botao) {
+      padding: 0.5rem 0;
+      border: 0;
+      font-size: 0.875rem;
+      color: var(--azul-claro);
+      transition: color 0.2s ease;
+    }
+
+    .cabecalho__lista a:not(.botao):hover,
+    .cabecalho__lista a[aria-current='page'] {
+      color: var(--branco);
+    }
+
+    .cabecalho__lista a[aria-current='page'] {
+      text-decoration: underline;
+      text-decoration-color: var(--azul-claro);
+      text-underline-offset: 0.5em;
+    }
+
+    .cabecalho__nav {
+      margin-left: auto;
+    }
+  }
+</style>
+
+<script>
+  const botao = document.querySelector<HTMLButtonElement>('.cabecalho__botao-menu');
+  const lista = document.getElementById('menu-paginas');
+
+  if (botao && lista) {
+    const rotulo = botao.querySelector('.sr-only');
+    const alternar = (abrir: boolean) => {
+      botao.setAttribute('aria-expanded', String(abrir));
+      lista.classList.toggle('aberto', abrir);
+      if (rotulo) rotulo.textContent = abrir ? 'Fechar menu' : 'Abrir menu';
+    };
+
+    botao.addEventListener('click', () => alternar(botao.getAttribute('aria-expanded') !== 'true'));
+
+    document.addEventListener('keydown', (evento) => {
+      if (evento.key === 'Escape' && botao.getAttribute('aria-expanded') === 'true') {
+        alternar(false);
+        botao.focus();
+      }
+    });
+
+    lista.addEventListener('click', (evento) => {
+      if ((evento.target as HTMLElement).closest('a')) alternar(false);
+    });
+  }
+</script>
