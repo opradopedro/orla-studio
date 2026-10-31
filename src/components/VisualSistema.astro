@@ -78,7 +78,7 @@ const semana = [
 
   .janela {
     overflow: hidden;
-    box-shadow: 0 30px 60px -30px rgba(2, 12, 26, 0.7);
+    box-shadow: 0 30px 60px -30px rgba(7, 36, 71, 0.21);
   }
 
   .janela__barra {
@@ -98,15 +98,15 @@ const semana = [
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    border: 1px solid rgba(185, 204, 224, 0.45);
+    border: 1px solid color-mix(in srgb, var(--acento) 45%, transparent);
   }
 
   .janela__endereco {
     flex: 1;
     padding: 0.3rem 0.75rem;
     border-radius: 999px;
-    background: rgba(185, 204, 224, 0.08);
-    color: var(--azul-claro);
+    background: color-mix(in srgb, var(--acento) 8%, transparent);
+    color: var(--acento);
     font-size: 0.75rem;
   }
 
@@ -122,7 +122,7 @@ const semana = [
     gap: 0.5rem;
     padding: 1rem 0;
     border-right: 1px solid var(--borda-painel);
-    color: var(--azul-claro);
+    color: var(--acento);
   }
 
   .janela__menu span {
@@ -139,8 +139,8 @@ const semana = [
   }
 
   .janela__menu .ativo {
-    background: var(--azul-claro);
-    color: var(--marinho);
+    background: var(--acento);
+    color: var(--papel);
   }
 
   .janela__conteudo {
@@ -153,7 +153,7 @@ const semana = [
     padding: 0.9rem 1rem;
     border: 1px solid var(--borda-painel);
     border-radius: 12px;
-    background: var(--marinho-painel-2);
+    background: var(--painel-2);
   }
 
   .cartao__titulo {
@@ -167,7 +167,7 @@ const semana = [
   .cartao__titulo .icone {
     width: 1rem;
     height: 1rem;
-    color: var(--azul-claro);
+    color: var(--acento);
   }
 
   .estoque {
@@ -187,8 +187,8 @@ const semana = [
   .estoque__repor {
     padding: 0 0.5rem;
     border-radius: 999px;
-    background: var(--branco);
-    color: var(--marinho);
+    background: var(--tinta);
+    color: var(--papel);
     font-size: 0.6875rem;
     font-weight: 700;
   }
@@ -197,7 +197,7 @@ const semana = [
     grid-column: 1 / -1;
     height: 4px;
     border-radius: 4px;
-    background: rgba(185, 204, 224, 0.15);
+    background: color-mix(in srgb, var(--acento) 15%, transparent);
     overflow: hidden;
   }
 
@@ -205,7 +205,7 @@ const semana = [
     display: block;
     height: 100%;
     width: var(--nivel);
-    background: var(--azul-claro);
+    background: var(--acento);
   }
 
   .grafico {
@@ -223,7 +223,7 @@ const semana = [
     justify-content: flex-end;
     gap: 0.35rem;
     height: 100%;
-    color: var(--azul-claro);
+    color: var(--acento);
     font-size: 0.6875rem;
   }
 
@@ -232,6 +232,6 @@ const semana = [
     height: calc(var(--valor) * (0.45 + var(--p, 0.5) * 0.5));
     min-height: 4px;
     border-radius: 4px 4px 0 0;
-    background: linear-gradient(var(--azul-claro), rgba(185, 204, 224, 0.35));
+    background: linear-gradient(var(--acento), color-mix(in srgb, var(--acento) 35%, transparent));
   }
 </style>

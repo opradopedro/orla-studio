@@ -23,18 +23,22 @@
 
 :root {
   /* Cores da marca */
-  --marinho: #072447;
-  --marinho-fundo: #041a35;
-  --branco: #ffffff;
-  --azul-claro: #b9cce0;
-  /* Tons derivados */
-  --nevoa: #eef3f8;
-  --azul-tinta: #2e4a6b;
-  --linha: rgba(185, 204, 224, 0.2);
-  --linha-clara: rgba(7, 36, 71, 0.14);
-  --marinho-painel: #0a2a50;
-  --marinho-painel-2: #0e325d;
-  --borda-painel: rgba(185, 204, 224, 0.16);
+  --azul-escuro: #072447;
+  --azul-medio: #244a6c;
+  --marca-claro: #e9eef4;
+  --marca-branco: #ffffff;
+
+  /* Tema claro (padrão): fundo branco, texto azul escuro, destaques em azul médio.
+     Seções com a classe .escuro trocam esses valores (ver abaixo). */
+  --papel: #ffffff;
+  --tinta: #072447;
+  --acento: #244a6c;
+  --painel: #ffffff;
+  --painel-2: #f4f7fa;
+  --fundo-2: #e9eef4;
+  --linha: rgba(36, 74, 108, 0.16);
+  --borda-painel: rgba(36, 74, 108, 0.14);
+  --sombra: 0 1px 2px rgba(7, 36, 71, 0.04), 0 24px 48px -30px rgba(7, 36, 71, 0.35);
 
   --fonte: 'Montserrat', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
@@ -51,9 +55,24 @@
   --margem: clamp(1.25rem, 0.6rem + 3vw, 2.5rem);
   --largura: 76rem;
   --secao: clamp(5rem, 3.5rem + 7vw, 9rem);
-  --raio: 8px;
-  --raio-painel: 18px;
+  --raio: 10px;
+  --raio-painel: 20px;
   --altura-menu: 4.5rem;
+}
+
+/* Tema escuro, usado só em pontos de destaque */
+.escuro {
+  --papel: #072447;
+  --tinta: #ffffff;
+  --acento: #c3d0de;
+  --painel: #0d2e55;
+  --painel-2: #12365f;
+  --fundo-2: #041a35;
+  --linha: rgba(233, 238, 244, 0.16);
+  --borda-painel: rgba(233, 238, 244, 0.14);
+  --sombra: none;
+  background: var(--papel);
+  color: var(--tinta);
 }
 
 *,
@@ -75,8 +94,8 @@ html {
 
 body {
   margin: 0;
-  background: var(--marinho);
-  color: var(--branco);
+  background: var(--papel);
+  color: var(--tinta);
   font-family: var(--fonte);
   font-size: var(--t-corpo);
   font-weight: 400;
@@ -133,13 +152,9 @@ a {
 }
 
 :focus-visible {
-  outline: 2px solid var(--azul-claro);
+  outline: 2px solid var(--acento);
   outline-offset: 3px;
   border-radius: 2px;
-}
-
-.claro :focus-visible {
-  outline-color: var(--marinho);
 }
 
 .sr-only {
@@ -160,8 +175,8 @@ a {
   top: -4rem;
   z-index: 100;
   padding: 0.75rem 1rem;
-  background: var(--branco);
-  color: var(--marinho);
+  background: var(--tinta);
+  color: var(--papel);
   font-weight: 700;
   border-radius: var(--raio);
 }
@@ -183,8 +198,8 @@ a {
 }
 
 .claro {
-  background: var(--nevoa);
-  color: var(--marinho);
+  background: var(--fundo-2);
+  color: var(--papel);
 }
 
 /* Texto */
@@ -194,22 +209,14 @@ a {
   font-weight: 500;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: var(--azul-claro);
-}
-
-.claro .rotulo {
-  color: var(--azul-tinta);
+  color: var(--acento);
 }
 
 .apoio {
-  color: var(--azul-claro);
+  color: var(--acento);
   font-size: var(--t-destaque);
   line-height: 1.55;
   max-width: 34em;
-}
-
-.claro .apoio {
-  color: var(--azul-tinta);
 }
 
 /* Botões */
@@ -220,10 +227,10 @@ a {
   gap: 0.6rem;
   min-height: 3.25rem;
   padding: 0.85rem 1.5rem;
-  border: 1px solid var(--branco);
+  border: 1px solid var(--tinta);
   border-radius: var(--raio);
-  background: var(--branco);
-  color: var(--marinho);
+  background: var(--tinta);
+  color: var(--papel);
   font-family: inherit;
   font-size: 0.8125rem;
   font-weight: 700;
@@ -237,35 +244,22 @@ a {
 }
 
 .botao:hover {
-  background: var(--azul-claro);
-  border-color: var(--azul-claro);
+  background: var(--acento);
+  border-color: var(--acento);
 }
 
 .botao--contorno {
   background: transparent;
-  color: var(--branco);
-  border-color: rgba(185, 204, 224, 0.55);
+  color: var(--tinta);
+  border-color: color-mix(in srgb, var(--acento) 55%, transparent);
 }
 
 .botao--contorno:hover {
-  background: rgba(185, 204, 224, 0.12);
-  border-color: var(--azul-claro);
+  background: color-mix(in srgb, var(--acento) 12%, transparent);
+  border-color: var(--acento);
 }
 
-.claro .botao,
-.botao--marinho {
-  background: var(--marinho);
-  border-color: var(--marinho);
-  color: var(--branco);
-}
-
-.claro .botao:hover,
-.botao--marinho:hover {
-  background: var(--azul-tinta);
-  border-color: var(--azul-tinta);
-}
-
-.botao svg {
+ .botao svg {
   width: 1.15em;
   height: 1.15em;
   flex: none;
@@ -276,7 +270,7 @@ a {
   display: inline-block;
   font-weight: 500;
   text-decoration: underline;
-  text-decoration-color: rgba(185, 204, 224, 0.5);
+  text-decoration-color: color-mix(in srgb, var(--acento) 50%, transparent);
   text-decoration-thickness: 1px;
   text-underline-offset: 0.35em;
   transition: text-decoration-color 0.2s ease;
@@ -284,10 +278,6 @@ a {
 
 .link:hover {
   text-decoration-color: currentColor;
-}
-
-.claro .link {
-  text-decoration-color: rgba(7, 36, 71, 0.35);
 }
 
 /* Entrada suave ao rolar: só com JavaScript ativo e sem preferência por menos movimento */
@@ -319,48 +309,23 @@ a {
   height: 2.75rem;
   border: 1px solid var(--borda-painel);
   border-radius: 12px;
-  background: var(--marinho-painel);
-  color: var(--azul-claro);
+  background: var(--painel);
+  color: var(--acento);
 }
 
-.claro .selo-icone {
-  background: var(--branco);
-  border-color: var(--linha-clara);
-  color: var(--marinho);
-}
-
-/* Grade técnica de fundo, como papel milimetrado que some nas bordas */
-.grade-tecnica {
-  position: relative;
-  isolation: isolate;
-}
-
-.grade-tecnica::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background-image:
-    linear-gradient(rgba(185, 204, 224, 0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(185, 204, 224, 0.07) 1px, transparent 1px);
-  background-size: 56px 56px;
-  background-position: center top;
-  mask-image: radial-gradient(ellipse 80% 70% at 60% 30%, #000 20%, transparent 75%);
-}
-
-/* Luz de amanhecer no topo das páginas */
+/* Luz de amanhecer no topo das páginas: branco com um véu azul claro */
 .amanhecer {
   background:
-    radial-gradient(ellipse 70% 55% at 75% 0%, rgba(185, 204, 224, 0.13), transparent 70%),
-    var(--marinho);
+    radial-gradient(ellipse 80% 60% at 80% 0%, rgba(233, 238, 244, 0.95), transparent 70%),
+    linear-gradient(180deg, #ffffff 0%, #f6f9fb 100%);
 }
 
 /* Painel técnico: usado nas telas de exemplo */
 .painel {
   border: 1px solid var(--borda-painel);
   border-radius: var(--raio-painel);
-  background: var(--marinho-painel);
+  background: var(--painel);
+  box-shadow: var(--sombra);
 }
 
 /* Bloco de texto: título e texto no mesmo tamanho, diferença só no peso e na cor */
@@ -376,21 +341,12 @@ a {
   font-weight: 700;
   letter-spacing: 0.01em;
   line-height: 1.4;
-  color: var(--branco);
+  color: var(--tinta);
 }
 
 .bloco p {
   margin-top: 0.35rem;
-  color: var(--azul-claro);
-}
-
-.claro .bloco h3,
-.claro .bloco strong {
-  color: var(--marinho);
-}
-
-.claro .bloco p {
-  color: var(--azul-tinta);
+  color: var(--acento);
 }
 
 /* Cabeçalho de seção */
@@ -424,10 +380,6 @@ a {
   gap: 1.25rem;
   padding-block: 1.5rem;
   border-top: 1px solid var(--linha);
-}
-
-.claro .lista-icones > li {
-  border-color: var(--linha-clara);
 }
 
 @media (min-width: 60rem) {
