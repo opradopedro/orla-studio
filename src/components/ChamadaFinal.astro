@@ -1,0 +1,90 @@
+---
+// Chamada final, centralizada como na apresentação da marca. O emblema fica
+// dentro de anéis que giram com a rolagem.
+import Aneis from './Aneis.astro';
+import Icone from './Icone.astro';
+import { caminho, linkWhatsApp } from '../config';
+
+interface Props {
+  titulo?: string;
+  texto?: string;
+  botao?: string;
+  mensagem?: string;
+}
+
+const {
+  titulo = 'Sua próxima ideia começa aqui.',
+  texto = 'Manda uma mensagem contando o que você precisa. Quem responde é a gente mesmo.',
+  botao = 'Conte pra gente o que você precisa',
+  mensagem = 'Oi! Vim pelo site da Orla e queria contar o que eu preciso.',
+} = Astro.props;
+---
+
+<section class="secao chamada grade-tecnica" aria-labelledby="chamada-titulo" data-progresso>
+  <div class="conteiner chamada__conteudo">
+    <div class="chamada__simbolo">
+      <Aneis class="chamada__aneis" />
+      <img
+        class="chamada__emblema"
+        src={caminho('/marca/emblema-branco-240.webp')}
+        alt=""
+        width="230"
+        height="240"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+    <p class="rotulo">Vamos conversar</p>
+    <h2 id="chamada-titulo">{titulo}</h2>
+    <p class="apoio">{texto}</p>
+    <a class="botao" href={linkWhatsApp(mensagem)} target="_blank" rel="noopener">
+      <Icone nome="message-circle" />
+      {botao}
+    </a>
+  </div>
+</section>
+
+<style>
+  .chamada {
+    overflow: hidden;
+  }
+
+  .chamada__conteudo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .chamada__simbolo {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 13rem;
+    height: 13rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .chamada__simbolo :global(.chamada__aneis) {
+    position: absolute;
+    inset: 0;
+  }
+
+  .chamada__emblema {
+    width: 4.25rem;
+    height: auto;
+  }
+
+  .chamada h2 {
+    margin-top: 1.25rem;
+    max-width: 14em;
+  }
+
+  .chamada .apoio {
+    margin-top: 1.25rem;
+  }
+
+  .chamada .botao {
+    margin-top: 2.5rem;
+  }
+</style>

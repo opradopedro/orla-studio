@@ -386,17 +386,17 @@ const iniciais = contato
         if (passo.dataset.de === 'empresa') {
           digitando.hidden = false;
           if (status) status.textContent = 'digitando...';
-          await esperar(1500);
+          await esperar(1200);
           digitando.hidden = true;
           if (status) status.textContent = 'online';
         } else {
           const escolhida = passo.dataset.escolhida;
           if (escolhida) {
-            await esperar(1100);
+            await esperar(900);
             figura.querySelector(`[data-opcao="${CSS.escape(escolhida)}"]`)?.classList.add('escolhida');
             await esperar(500);
           } else {
-            await esperar(1200);
+            await esperar(1000);
           }
         }
         mostrar(passo);

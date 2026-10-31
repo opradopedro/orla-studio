@@ -1,0 +1,231 @@
+---
+// Tela de exemplo: agenda do dia preenchida pela Secretária IA.
+import Icone from './Icone.astro';
+
+const horarios = [
+  { hora: '09:00', servico: 'Limpeza', status: 'Confirmado', icone: 'circle-check-big', tipo: 'ok' },
+  { hora: '10:30', servico: 'Avaliação', status: 'Confirmado', icone: 'circle-check-big', tipo: 'ok' },
+  { hora: '14:30', servico: 'Limpeza', status: 'Marcado às 23:13', icone: 'sparkles', tipo: 'novo' },
+  { hora: '16:00', servico: 'Retorno', status: 'Aguardando', icone: 'clock', tipo: 'espera' },
+  { hora: '17:30', servico: 'Horário vago', status: 'Lista de espera', icone: 'list-restart', tipo: 'vago' },
+];
+---
+
+<div class="visual" aria-hidden="true" data-progresso>
+  <div class="tela painel">
+    <div class="tela__topo">
+      <Icone nome="calendar-check" />
+      <span>Agenda de quinta</span>
+      <span class="tela__pilula">ao vivo</span>
+    </div>
+    <ul class="agenda">
+      {
+        horarios.map((h) => (
+          <li class:list={['agenda__linha', `agenda__linha--${h.tipo}`]}>
+            <span class="agenda__hora">{h.hora}</span>
+            <span class="agenda__servico">{h.servico}</span>
+            <span class="agenda__status">
+              <Icone nome={h.icone} />
+              {h.status}
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <div class="aviso painel">
+    <span class="aviso__icone"><Icone nome="bell-ring" /></span>
+    <span class="aviso__texto">
+      <strong>Lembrete enviado</strong>
+      <span>48h antes do horário</span>
+    </span>
+    <span class="aviso__botoes">
+      <span>Confirmar</span>
+      <span>Remarcar</span>
+    </span>
+  </div>
+</div>
+
+<style>
+  .visual {
+    position: relative;
+    padding: 0 1.5rem 3.5rem 0;
+    font-size: 0.8125rem;
+  }
+
+  .tela {
+    overflow: hidden;
+    box-shadow: 0 30px 60px -30px rgba(2, 12, 26, 0.7);
+  }
+
+  .tela__topo {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--borda-painel);
+    font-weight: 700;
+  }
+
+  .tela__topo .icone {
+    color: var(--azul-claro);
+  }
+
+  .tela__pilula {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.2rem 0.6rem;
+    border: 1px solid var(--borda-painel);
+    border-radius: 999px;
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--azul-claro);
+  }
+
+  .tela__pilula::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--azul-claro);
+    animation: pulsar 2s ease-in-out infinite;
+  }
+
+  @keyframes pulsar {
+    50% {
+      opacity: 0.3;
+    }
+  }
+
+  .agenda {
+    list-style: none;
+    margin: 0;
+    padding: 0.5rem;
+  }
+
+  .agenda__linha {
+    display: grid;
+    grid-template-columns: 3.25rem 1fr auto;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    border-radius: 10px;
+  }
+
+  .agenda__linha + .agenda__linha {
+    border-top: 1px solid rgba(185, 204, 224, 0.08);
+  }
+
+  .agenda__hora {
+    font-weight: 700;
+    color: var(--azul-claro);
+  }
+
+  .agenda__servico {
+    font-weight: 500;
+  }
+
+  .agenda__status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--azul-claro);
+    font-size: 0.75rem;
+  }
+
+  .agenda__status .icone {
+    width: 0.95rem;
+    height: 0.95rem;
+  }
+
+  .agenda__linha--novo {
+    background: var(--azul-claro);
+    color: var(--marinho);
+  }
+
+  .agenda__linha--novo .agenda__hora,
+  .agenda__linha--novo .agenda__status {
+    color: var(--marinho);
+  }
+
+  .agenda__linha--novo + .agenda__linha {
+    border-top-color: transparent;
+  }
+
+  .agenda__linha--vago .agenda__servico {
+    color: var(--azul-claro);
+    font-weight: 400;
+  }
+
+  .aviso {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    width: min(18rem, 85%);
+    padding: 0.9rem 1rem;
+    background: var(--marinho-painel-2);
+    box-shadow: 0 24px 48px -20px rgba(2, 12, 26, 0.8);
+    transform: translateY(calc((0.5 - var(--p, 0.5)) * 40px));
+  }
+
+  .aviso__icone {
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    background: var(--branco);
+    color: var(--marinho);
+  }
+
+  .aviso__icone .icone {
+    width: 1.05rem;
+    height: 1.05rem;
+  }
+
+  .aviso__texto {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.35;
+  }
+
+  .aviso__texto span {
+    color: var(--azul-claro);
+  }
+
+  .aviso__botoes {
+    display: flex;
+    gap: 0.4rem;
+    width: 100%;
+  }
+
+  .aviso__botoes span {
+    flex: 1;
+    padding: 0.4rem;
+    border: 1px solid var(--borda-painel);
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 500;
+  }
+
+  .aviso__botoes span:first-child {
+    background: var(--branco);
+    border-color: var(--branco);
+    color: var(--marinho);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tela__pilula::before {
+      animation: none;
+    }
+  }
+</style>

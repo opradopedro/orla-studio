@@ -1,0 +1,165 @@
+---
+// Tela de exemplo: andamento de uma campanha de reativação.
+import Icone from './Icone.astro';
+
+const clientes = [
+  { iniciais: 'MR', ultima: 'Última visita em março', status: 'Horário marcado', icone: 'calendar-check', tipo: 'marcado' },
+  { iniciais: 'JS', ultima: 'Última visita em janeiro', status: 'Respondeu', icone: 'message-circle', tipo: 'conversa' },
+  { iniciais: 'AL', ultima: 'Orçamento sem retorno', status: 'Mensagem enviada', icone: 'send', tipo: 'enviada' },
+  { iniciais: 'CP', ultima: 'Última visita em agosto', status: 'Mensagem enviada', icone: 'send', tipo: 'enviada' },
+  { iniciais: 'TF', ultima: 'Última visita em junho', status: 'Pediu para sair', icone: 'user-x', tipo: 'saiu' },
+];
+---
+
+<div class="visual" aria-hidden="true" data-progresso>
+  <div class="tela painel">
+    <div class="tela__topo">
+      <Icone nome="refresh-ccw" />
+      <span>Reativação de clientes</span>
+    </div>
+    <div class="campanha">
+      <span>Campanha de 30 dias</span>
+      <span>Dia 12</span>
+      <span class="campanha__barra"><span></span></span>
+    </div>
+    <ul class="clientes">
+      {
+        clientes.map((c) => (
+          <li class:list={['cliente', `cliente--${c.tipo}`]}>
+            <span class="cliente__avatar">{c.iniciais}</span>
+            <span class="cliente__ultima">{c.ultima}</span>
+            <span class="cliente__status">
+              <Icone nome={c.icone} />
+              {c.status}
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</div>
+
+<style>
+  .visual {
+    font-size: 0.8125rem;
+  }
+
+  .tela {
+    overflow: hidden;
+    box-shadow: 0 30px 60px -30px rgba(2, 12, 26, 0.7);
+  }
+
+  .tela__topo {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--borda-painel);
+    font-weight: 700;
+  }
+
+  .tela__topo .icone {
+    color: var(--azul-claro);
+  }
+
+  .campanha {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.6rem;
+    padding: 1rem 1.25rem 0.5rem;
+    color: var(--azul-claro);
+  }
+
+  .campanha span:nth-child(2) {
+    color: var(--branco);
+    font-weight: 700;
+  }
+
+  .campanha__barra {
+    grid-column: 1 / -1;
+    height: 4px;
+    border-radius: 4px;
+    background: rgba(185, 204, 224, 0.15);
+    overflow: hidden;
+  }
+
+  .campanha__barra span {
+    display: block;
+    height: 100%;
+    width: calc(15% + var(--p, 0.5) * 50%);
+    background: var(--azul-claro);
+    border-radius: inherit;
+  }
+
+  .clientes {
+    list-style: none;
+    margin: 0;
+    padding: 0.5rem;
+  }
+
+  .cliente {
+    display: grid;
+    grid-template-columns: 2rem 1fr auto;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.7rem 0.75rem;
+    border-radius: 10px;
+  }
+
+  .cliente + .cliente {
+    border-top: 1px solid rgba(185, 204, 224, 0.08);
+  }
+
+  .cliente__avatar {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    border: 1px solid var(--borda-painel);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    color: var(--azul-claro);
+  }
+
+  .cliente__status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.75rem;
+    color: var(--azul-claro);
+  }
+
+  .cliente__status .icone {
+    width: 0.95rem;
+    height: 0.95rem;
+  }
+
+  .cliente--marcado {
+    background: var(--azul-claro);
+    color: var(--marinho);
+  }
+
+  .cliente--marcado + .cliente {
+    border-top-color: transparent;
+  }
+
+  .cliente--marcado .cliente__avatar {
+    background: var(--marinho);
+    border-color: var(--marinho);
+    color: var(--branco);
+  }
+
+  .cliente--marcado .cliente__status {
+    color: var(--marinho);
+    font-weight: 700;
+  }
+
+  .cliente--conversa .cliente__status {
+    color: var(--branco);
+  }
+
+  .cliente--saiu {
+    opacity: 0.55;
+  }
+</style>
