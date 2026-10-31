@@ -1,0 +1,98 @@
+---
+// Perguntas frequentes em sanfona (details/summary), funciona sem JavaScript.
+import Icone from './Icone.astro';
+
+interface Props {
+  itens: { pergunta: string; resposta: string }[];
+  titulo?: string;
+}
+
+const { itens, titulo = 'Perguntas frequentes' } = Astro.props;
+
+const dadosEstruturados = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: itens.map((item) => ({
+    '@type': 'Question',
+    name: item.pergunta,
+    acceptedAnswer: { '@type': 'Answer', text: item.resposta },
+  })),
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(dadosEstruturados)} />
+
+<section class="secao faq" aria-labelledby="faq-titulo">
+  <div class="conteiner faq__grade">
+    <h2 id="faq-titulo">{titulo}</h2>
+    <div class="faq__lista">
+      {
+        itens.map((item) => (
+          <details class="faq__item">
+            <summary>
+              <span>{item.pergunta}</span>
+              <Icone nome="plus" class="faq__icone" />
+            </summary>
+            <p>{item.resposta}</p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq__grade {
+    display: grid;
+    gap: 2.5rem;
+  }
+
+  .faq__lista {
+    border-bottom: 1px solid var(--linha);
+  }
+
+  .faq__item {
+    border-top: 1px solid var(--linha);
+  }
+
+  .faq__item summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.4rem 0;
+    font-weight: 700;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .faq__item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq__item summary:hover {
+    color: var(--azul-claro);
+  }
+
+  .faq__item :global(.faq__icone) {
+    color: var(--azul-claro);
+    transition: transform 0.25s ease;
+  }
+
+  .faq__item[open] :global(.faq__icone) {
+    transform: rotate(45deg);
+  }
+
+  .faq__item p {
+    padding: 0 2.5rem 1.5rem 0;
+    color: var(--azul-claro);
+    max-width: 40em;
+  }
+
+  @media (min-width: 60rem) {
+    .faq__grade {
+      grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+      gap: 4rem;
+    }
+  }
+</style>

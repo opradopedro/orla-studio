@@ -1,0 +1,353 @@
+---
+import Base from '../layouts/Base.astro';
+import TopoPagina from '../components/TopoPagina.astro';
+import Conversa, { type Mensagem } from '../components/Conversa.astro';
+import Icone from '../components/Icone.astro';
+import Onda from '../components/Onda.astro';
+import LinhaTempo from '../components/LinhaTempo.astro';
+import VisualReativacao from '../components/VisualReativacao.astro';
+import Faq from '../components/Faq.astro';
+import ChamadaFinal from '../components/ChamadaFinal.astro';
+import { caminho, linkWhatsApp } from '../config';
+
+const conversa: Mensagem[] = [
+  {
+    de: 'empresa',
+    hora: '10:02',
+    texto:
+      'Oi, Renata! Aqui é da clínica. Faz um tempinho desde a sua última limpeza, em março. Quer que eu veja um horário pra você? Se preferir não receber mais mensagens, é só responder SAIR.',
+  },
+  { de: 'cliente', hora: '10:15', texto: 'Nossa, verdade! Quero sim. Tem sábado?' },
+  {
+    de: 'empresa',
+    hora: '10:15',
+    texto: 'Tenho sábado às 9h ou às 11h. Qual fica melhor?',
+    opcoes: ['Sábado, 9h', 'Sábado, 11h'],
+  },
+  { de: 'cliente', hora: '10:16', texto: 'Sábado, 11h', escolhida: 'Sábado, 11h' },
+  {
+    de: 'empresa',
+    hora: '10:16',
+    texto: 'Marcado! Sábado às 11h. Te aviso 2 dias antes e no dia pra confirmar.',
+  },
+];
+
+const etapas = [
+  {
+    quando: 'Primeira semana',
+    icone: 'file-spreadsheet',
+    titulo: 'Organização da lista',
+    texto:
+      'A gente separa quem pode receber mensagem, por tempo sem vir e por tipo de serviço. Lista bagunçada não é problema: arrumar faz parte do trabalho.',
+  },
+  {
+    quando: 'Primeira semana',
+    icone: 'pen-line',
+    titulo: 'Mensagem aprovada por você',
+    texto:
+      'Você aprova o texto da primeira mensagem antes de qualquer envio. Educada, com o nome da pessoa e com opção clara de não receber mais.',
+  },
+  {
+    quando: 'Da segunda à quarta semana',
+    icone: 'messages-square',
+    titulo: 'Conversas e agendamentos',
+    texto:
+      'As mensagens saem aos poucos pelo WhatsApp oficial. A IA responde as dúvidas e marca o horário direto na sua agenda.',
+  },
+  {
+    quando: 'Fim dos 30 dias',
+    icone: 'chart-line',
+    titulo: 'Resultado na mesa',
+    texto:
+      'Você recebe quem voltou, quem pediu para não receber mais e quem ainda pode ser chamado mais para frente.',
+  },
+];
+
+const perguntas = [
+  {
+    pergunta: 'Isso não é spam?',
+    resposta:
+      'Não. A mensagem vai só para quem já foi seu cliente, é educada e tem opção clara de não receber mais. Quem pede para sair não recebe de novo.',
+  },
+  {
+    pergunta: 'Preciso ter a Secretária IA?',
+    resposta:
+      'Não. A reativação funciona sozinha. Se você já tem a Secretária, ela entra como um complemento e quem volta já cai na agenda com lembrete.',
+  },
+  {
+    pergunta: 'Preciso gastar com anúncio?',
+    resposta:
+      'Não. A campanha usa a lista que você já tem. Existe o custo das mensagens cobrado pela Meta no WhatsApp oficial, que a gente explica antes de começar.',
+  },
+  {
+    pergunta: 'Minha lista está desorganizada. Tem problema?',
+    resposta: 'Não. Organizar a lista é a primeira coisa que a gente faz na campanha.',
+  },
+  {
+    pergunta: 'Serve para orçamento que não fechou?',
+    resposta:
+      'Serve. A conversa muda: em vez de lembrar da última visita, ela retoma o orçamento e tira as dúvidas que ficaram.',
+  },
+  {
+    pergunta: 'E depois dos 30 dias?',
+    resposta: 'Você vê o resultado e decide se quer repetir mais para frente, com quem ainda não voltou.',
+  },
+];
+---
+
+<Base
+  titulo="Reativação de clientes pelo WhatsApp"
+  descricao="Campanha de 30 dias em que a IA conversa pelo WhatsApp oficial com clientes que sumiram, tira dúvidas e marca o retorno direto na sua agenda. Sem anúncio e sem disparo em massa."
+>
+  <TopoPagina
+    rotulo="Reativação de clientes"
+    titulo="Aquela lista de pacientes que não voltam desde o ano passado."
+  >
+    <p>
+      Em 30 dias, a IA conversa pelo WhatsApp oficial com quem sumiu, tira dúvidas e marca o retorno direto na sua
+      agenda. Sem gastar com anúncio: a gente trabalha a lista que você já tem.
+    </p>
+    <Fragment slot="botoes">
+      <a
+        class="botao"
+        href={linkWhatsApp('Oi! Quero saber mais sobre a reativação de clientes.')}
+        target="_blank"
+        rel="noopener"
+      >
+        <Icone nome="message-circle" />
+        Quero reativar meus clientes
+      </a>
+      <a class="botao botao--contorno" href="#campanha">Ver a campanha</a>
+    </Fragment>
+    <Conversa slot="visual" contato="Sua clínica" mensagens={conversa} legenda="Exemplo de conversa de reativação" />
+  </TopoPagina>
+
+  <section class="secao dor" aria-labelledby="dor-titulo">
+    <div class="conteiner dor__grade">
+      <div class="dor__texto">
+        <h2 id="dor-titulo">Essas pessoas já conhecem você.</h2>
+        <p>
+          Muitas só esqueceram, deixaram para depois ou ficaram com uma dúvida que ninguém respondeu. Outras pediram
+          orçamento e não fecharam.
+        </p>
+        <p>
+          A equipe até queria chamar uma por uma, mas o dia a dia não deixa. A campanha faz isso por você, com calma e
+          com educação, uma conversa de cada vez.
+        </p>
+      </div>
+      <VisualReativacao />
+    </div>
+  </section>
+
+  <section class="secao campanha" id="campanha" aria-labelledby="campanha-titulo">
+    <div class="conteiner campanha__grade">
+      <div class="campanha__cabeca">
+        <h2 id="campanha-titulo">Como funciona a campanha de 30 dias</h2>
+        <p class="apoio">Do arquivo com a lista até o cliente com horário marcado.</p>
+      </div>
+      <LinhaTempo etapas={etapas} />
+    </div>
+  </section>
+
+  <Onda cor="var(--nevoa)" />
+  <section class="secao claro" aria-labelledby="precisamos-titulo">
+    <div class="conteiner">
+      <div class="cabeca-secao cabeca-secao--lado">
+        <h2 id="precisamos-titulo">O que a gente precisa de você</h2>
+        <p class="apoio">Pouca coisa. O resto fica com a gente.</p>
+      </div>
+      <ul class="precisa">
+        <li data-revelar>
+          <span class="selo-icone"><Icone nome="file-spreadsheet" /></span>
+          <div class="bloco">
+            <h3>A lista de clientes</h3>
+            <p>Nome, telefone e data da última visita ou do orçamento. Pode ser planilha ou exportação do seu sistema.</p>
+          </div>
+        </li>
+        <li data-revelar>
+          <span class="selo-icone"><Icone nome="calendar-cog" /></span>
+          <div class="bloco">
+            <h3>As regras da agenda</h3>
+            <p>Quais horários oferecer, quanto tempo dura cada serviço e quem atende o quê.</p>
+          </div>
+        </li>
+        <li data-revelar>
+          <span class="selo-icone"><Icone nome="pen-line" /></span>
+          <div class="bloco">
+            <h3>Sua aprovação</h3>
+            <p>Você lê e aprova a mensagem antes de qualquer envio.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+  <Onda cor="var(--nevoa)" invertida />
+
+  <section class="secao" aria-labelledby="cuidados-titulo">
+    <div class="conteiner">
+      <div class="cabeca-secao cabeca-secao--lado">
+        <h2 id="cuidados-titulo">Nada de disparo em massa</h2>
+        <p class="apoio">Cuidado com o seu cliente e com o seu número.</p>
+      </div>
+      <ul class="lista-icones lista-icones--duas">
+        <li>
+          <span class="selo-icone"><Icone nome="user-round-check" /></span>
+          <div class="bloco">
+            <h3>Só para quem já é cliente</h3>
+            <p>A mensagem vai apenas para quem já passou pelo seu negócio ou pediu orçamento.</p>
+          </div>
+        </li>
+        <li>
+          <span class="selo-icone"><Icone nome="user-x" /></span>
+          <div class="bloco">
+            <h3>Opção clara de sair</h3>
+            <p>Toda primeira mensagem explica como parar de receber. Quem pede não recebe de novo.</p>
+          </div>
+        </li>
+        <li>
+          <span class="selo-icone"><Icone nome="badge-check" /></span>
+          <div class="bloco">
+            <h3>WhatsApp oficial</h3>
+            <p>Mensagens pela API oficial da Meta, com modelos aprovados. Sem risco de bloquear o seu número.</p>
+          </div>
+        </li>
+        <li>
+          <span class="selo-icone"><Icone nome="lock" /></span>
+          <div class="bloco">
+            <h3>LGPD</h3>
+            <p>A lista serve só para a campanha e é apagada quando você pedir.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="ligacao" aria-labelledby="ligacao-titulo">
+    <div class="conteiner">
+      <div class="ligacao__caixa painel grade-tecnica">
+        <span class="selo-icone ligacao__selo"><Icone nome="calendar-sync" /></span>
+        <div class="bloco">
+          <h2 id="ligacao-titulo">Funciona sozinha ou junto com a Secretária IA</h2>
+          <p>
+            A Secretária segura quem já marcou. A reativação traz de volta quem foi embora. Quem volta já cai na agenda
+            com lembrete de confirmação.
+          </p>
+        </div>
+        <a class="botao botao--contorno" href={caminho('/secretaria-ia')}>Conhecer a Secretária IA</a>
+      </div>
+    </div>
+  </section>
+
+  <Faq itens={perguntas} />
+
+  <ChamadaFinal
+    titulo="Vamos trazer seus clientes de volta."
+    texto="Conta quantas pessoas estão paradas na sua lista. A gente te mostra como a campanha ficaria."
+    botao="Quero reativar meus clientes"
+    mensagem="Oi! Quero saber mais sobre a reativação de clientes."
+  />
+</Base>
+
+<style>
+  .dor__grade,
+  .campanha__grade {
+    display: grid;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .dor__texto {
+    display: grid;
+    gap: 1.25rem;
+    max-width: 34em;
+  }
+
+  .dor__texto h2 {
+    margin-bottom: 0.5rem;
+  }
+
+  .dor__texto p {
+    color: var(--azul-claro);
+  }
+
+  .campanha__cabeca {
+    display: grid;
+    gap: 1.25rem;
+    align-self: start;
+  }
+
+  .precisa {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+  }
+
+  .precisa li {
+    display: flex;
+    gap: 1.25rem;
+    padding: 1.75rem;
+    border: 1px solid var(--linha-clara);
+    border-radius: var(--raio-painel);
+    background: var(--branco);
+  }
+
+  .ligacao {
+    padding-bottom: var(--secao);
+  }
+
+  .ligacao__caixa {
+    display: grid;
+    gap: 1.5rem;
+    justify-items: start;
+    padding: clamp(1.75rem, 1rem + 3vw, 3rem);
+    overflow: hidden;
+  }
+
+  .ligacao__selo {
+    width: 3.5rem;
+    height: 3.5rem;
+    background: var(--branco);
+    border-color: var(--branco);
+    color: var(--marinho);
+  }
+
+  .ligacao h2 {
+    font-size: inherit;
+  }
+
+  .ligacao .bloco {
+    max-width: 40em;
+  }
+
+  @media (min-width: 60rem) {
+    .dor__grade {
+      grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+      gap: 5rem;
+    }
+
+    .campanha__grade {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+      gap: 5rem;
+    }
+
+    .campanha__cabeca {
+      position: sticky;
+      top: calc(var(--altura-menu) + 3rem);
+    }
+
+    .precisa {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .precisa li {
+      flex-direction: column;
+    }
+
+    .ligacao__caixa {
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 2rem;
+    }
+  }
+</style>

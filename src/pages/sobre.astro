@@ -1,0 +1,205 @@
+---
+import Base from '../layouts/Base.astro';
+import TopoPagina from '../components/TopoPagina.astro';
+import Icone from '../components/Icone.astro';
+import Aneis from '../components/Aneis.astro';
+import Onda from '../components/Onda.astro';
+import ChamadaFinal from '../components/ChamadaFinal.astro';
+import { caminho } from '../config';
+
+// TODO: colocar nome e foto real de cada um (foto em public/equipe/, sem banco de imagens).
+const pessoas = [
+  {
+    icone: 'code-xml',
+    papel: 'Parte técnica',
+    texto:
+      'Constrói a Secretária IA, os sistemas e os sites. Escreve o código e cuida para tudo continuar funcionando depois que vai para o ar.',
+  },
+  {
+    icone: 'headset',
+    papel: 'Atendimento',
+    texto:
+      'Conversa com você do começo ao fim: entende o que você precisa, acompanha a implantação e as revisões de cada mês.',
+  },
+];
+
+const principios = [
+  {
+    icone: 'goal',
+    titulo: 'O que importa é o seu dia a dia',
+    texto: 'A gente mede o trabalho pelo que muda na sua rotina, não pela tecnologia usada.',
+  },
+  {
+    icone: 'message-circle',
+    titulo: 'Conversa direta',
+    texto: 'Você fala com quem constrói, pelo WhatsApp, sem intermediário.',
+  },
+  {
+    icone: 'shield-check',
+    titulo: 'Cuidado com os dados',
+    texto: 'WhatsApp oficial e LGPD em tudo que envolve os seus clientes.',
+  },
+  {
+    icone: 'map-pin',
+    titulo: 'Perto de você',
+    texto: 'Estamos na Baixada Santista e atendemos todo o Brasil por vídeo.',
+  },
+];
+---
+
+<Base
+  titulo="Sobre a Orla"
+  descricao="A Orla Studio é um estúdio de tecnologia de Praia Grande (SP). Quem entende o seu problema é quem constrói a solução e te atende depois."
+>
+  <TopoPagina rotulo="Sobre a Orla" titulo="Um estúdio pequeno, de propósito.">
+    <p>
+      A Orla nasceu em Praia Grande para fazer tecnologia que funciona no dia a dia de pequenos negócios. Sem central
+      de atendimento e sem jargão.
+    </p>
+    <div slot="visual" class="local" aria-hidden="true">
+      <Aneis class="local__aneis" />
+      <img
+        class="local__emblema"
+        src={caminho('/marca/emblema-branco-240.webp')}
+        alt=""
+        width="230"
+        height="240"
+        decoding="async"
+      />
+      <span class="local__coordenada local__coordenada--a">24°00′ S</span>
+      <span class="local__coordenada local__coordenada--b">46°24′ O</span>
+    </div>
+  </TopoPagina>
+
+  <section class="secao" aria-labelledby="quem-faz-titulo">
+    <div class="conteiner">
+      <div class="cabeca-secao cabeca-secao--lado">
+        <h2 id="quem-faz-titulo">Quem faz a Orla</h2>
+        <p class="apoio">Duas pessoas, cada uma cuidando de uma ponta do seu projeto.</p>
+      </div>
+      <div class="pessoas">
+        {
+          pessoas.map((pessoa) => (
+            <article class="pessoa painel" data-revelar>
+              <div class="pessoa__foto" aria-hidden="true">
+                <Icone nome={pessoa.icone} />
+              </div>
+              <div class="bloco">
+                <h3>{pessoa.papel}</h3>
+                <p>{pessoa.texto}</p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <Onda cor="var(--nevoa)" />
+  <section class="secao claro" aria-labelledby="pensa-titulo">
+    <div class="conteiner">
+      <div class="cabeca-secao cabeca-secao--lado">
+        <h2 id="pensa-titulo">Como a gente pensa</h2>
+        <p class="apoio">O que vale em todo projeto, do site mais simples ao sistema maior.</p>
+      </div>
+      <ul class="lista-icones lista-icones--duas">
+        {
+          principios.map((item) => (
+            <li data-revelar>
+              <span class="selo-icone">
+                <Icone nome={item.icone} />
+              </span>
+              <div class="bloco">
+                <h3>{item.titulo}</h3>
+                <p>{item.texto}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+  <Onda cor="var(--nevoa)" invertida />
+
+  <!--
+    TODO: prova social. Quando houver depoimentos reais (com autorização do cliente),
+    criar aqui uma seção com nome, negócio e o texto do cliente. Não usar depoimentos inventados.
+  -->
+
+  <ChamadaFinal />
+</Base>
+
+<style>
+  .local {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: min(100%, 24rem);
+    aspect-ratio: 1;
+    margin-inline: auto;
+  }
+
+  .local :global(.local__aneis) {
+    position: absolute;
+    inset: 0;
+  }
+
+  .local__emblema {
+    width: 30%;
+    height: auto;
+  }
+
+  .local__coordenada {
+    position: absolute;
+    font-size: var(--t-rotulo);
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    color: var(--azul-claro);
+  }
+
+  .local__coordenada--a {
+    top: 50%;
+    left: 0;
+    translate: -40% -50%;
+    rotate: -90deg;
+  }
+
+  .local__coordenada--b {
+    bottom: -0.5rem;
+    left: 50%;
+    translate: -50% 100%;
+  }
+
+  .pessoas {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .pessoa {
+    display: flex;
+    gap: 1.5rem;
+    padding: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+  }
+
+  .pessoa__foto {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 50%;
+    background: var(--azul-claro);
+    color: var(--marinho);
+  }
+
+  .pessoa__foto :global(.icone) {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+
+  @media (min-width: 60rem) {
+    .pessoas {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>
